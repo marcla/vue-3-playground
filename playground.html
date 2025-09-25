@@ -9,15 +9,18 @@
     <h1>Hello Playground</h1>
 
     <div id="app">
-      <h2>{{message}}</h2>
+      <h2 v-if="message.includes('!')">{{message.toUpperCase()}}</h2>
+      <p v-else>{{message}}</p>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
-      const app = Vue.createApp({
+      const { createApp } = Vue
+
+      const app = createApp({
         data() {
           return {
-            message: `Hello, it's works`,
+            message: `Hello, it's works!`,
           }
         },
       })
