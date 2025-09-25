@@ -13,10 +13,15 @@
       <p v-else>{{message}}</p>
 
       <ul v-if="listOfUsers.length > 0">
-        <li v-for="user in listOfUsers">
+        <li v-for="(user, index) in listOfUsers">
           <h3>{{user.fullName}}</h3>
-          <p>Job: {{user.job}}</p>
+          <!-- <p>Index: {{index}}</p> -->
+          <p v-if="index == 0">Primo utente</p>
+          <p v-else-if="index == listOfUsers.length - 1">Ultimo utente</p>
 
+          <p>Lavoro: {{user.job}}</p>
+
+          <p>Animali:</p>
           <ul>
             <li v-for="animal in user.animals">{{animal}}</li>
           </ul>
@@ -32,7 +37,7 @@
       const app = createApp({
         data() {
           return {
-            message: `Hello, it's works!`,
+            message: `Lista degli utenti!`,
             listOfUsers: [
               {
                 id: '593404fd-d696-4234-9efa-662530c79957',
