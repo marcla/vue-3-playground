@@ -16,7 +16,7 @@
       <div>
         <label for="incrementAmountRef">Valore incrementale</label>
         <!-- <input id="incrementAmountRef" v-model="incrementAmount" type="text"> -->
-        <input id="incrementAmountRef" v-model="incrementAmount" type="number">
+        <input id="incrementAmountRef" v-model="incrementAmount" type="number" />
       </div>
 
       <!-- <button v-on:click="incrementCount" type="button">Incrementa</button> -->
@@ -24,8 +24,27 @@
 
       <hr />
 
+      <h2>Aggiunti utente</h2>
+
+      <fieldset>
+        <legend><b>Nuovo utente</b></legend>
+
+        <label for="userFullName">Nome completo:</label>
+        <input @keyup.enter="handleAddNewUser" v-model="newUserModel.fullName" id="userFullName" type="text" />
+
+        <p>
+          <button @click="handleAddNewUser" type="button">Salva</button>
+        </p>
+      </fieldset>
+
+      <pre>{{newUserModel}}</pre>
+
+      <hr />
+
       <h2 v-if="message.includes('!')">{{message.toUpperCase()}}</h2>
       <p v-else>{{message}}</p>
+
+      <h3>Totale utenti <b>{{listOfUsers.length}}</b></h3>
 
       <ul v-if="listOfUsers.length > 0">
         <li v-for="(user, index) in listOfUsers">
@@ -56,6 +75,9 @@
             count: 0,
             incrementAmount: 2,
             // Utenti
+            newUserModel: {
+              fullName: '',
+            },
             message: `Lista degli utenti!`,
             listOfUsers: [
               {
@@ -145,6 +167,16 @@
             // console.log(args)
             // this.count += 1
             this.count += this.incrementAmount
+          },
+          handleAddNewUser() {
+            const newUser = {
+              id: '7aff2c49-ad1f-4ebf-80b7-70bb23928558',
+              fullName: this.newUserModel.fullName,
+              job: '',
+              animals: [],
+            }
+            this.listOfUsers.splice(0, 0, newUser)
+            this.newUserModel.fullName = ''
           },
         },
       })
