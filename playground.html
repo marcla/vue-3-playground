@@ -9,6 +9,21 @@
     <h1>Hello Playground</h1>
 
     <div id="app">
+      <h2>Contatore</h2>
+
+      <p :data-increment-by="incrementAmount">Contatore: <b>{{count}}</b></p>
+
+      <div>
+        <label for="incrementAmountRef">Valore incrementale</label>
+        <!-- <input id="incrementAmountRef" v-model="incrementAmount" type="text"> -->
+        <input id="incrementAmountRef" v-model="incrementAmount" type="number">
+      </div>
+
+      <!-- <button v-on:click="incrementCount" type="button">Incrementa</button> -->
+      <button @click="incrementCount" type="button">Incrementa</button>
+
+      <hr />
+
       <h2 v-if="message.includes('!')">{{message.toUpperCase()}}</h2>
       <p v-else>{{message}}</p>
 
@@ -37,6 +52,10 @@
       const app = createApp({
         data() {
           return {
+            // Contatore
+            count: 0,
+            incrementAmount: 2,
+            // Utenti
             message: `Lista degli utenti!`,
             listOfUsers: [
               {
@@ -119,6 +138,14 @@
               },
             ],
           }
+        },
+        methods: {
+          incrementCount(...args) {
+            // console.log(this);
+            // console.log(args)
+            // this.count += 1
+            this.count += this.incrementAmount
+          },
         },
       })
 
