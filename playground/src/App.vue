@@ -1,8 +1,9 @@
 <script>
 import BaseCounter from './components/base-counter.vue'
+import BenderStatistics from './components/bender-statistics.vue'
 
 export default {
-  components: { BaseCounter },
+  components: { BaseCounter, BenderStatistics },
   data() {
     return {
       // Utenti
@@ -99,7 +100,7 @@ export default {
         id: '7aff2c49-ad1f-4ebf-80b7-70bb23928558',
         fullName: this.newUserModel.fullName,
         job: '',
-        animals: [],
+        animals: ['cat', 'turtle'],
       }
       this.listOfUsers.splice(0, 0, newUser)
       this.newUserModel.fullName = ''
@@ -107,19 +108,6 @@ export default {
     handleAddToFavouriteUser(user) {
       console.log(user)
       this.favouriteList.push(user)
-    },
-  },
-  computed: {
-    benderStatistics() {
-      const statistics = {}
-
-      for (const user of this.listOfUsers) {
-        for (const animal of user.animals) {
-          statistics[animal] = (statistics[animal] ?? 0) + 1
-        }
-      }
-
-      return statistics
     },
   },
 }
@@ -149,14 +137,7 @@ export default {
 
   <hr />
 
-  <h2>Statistiche</h2>
-
-  <ul>
-    <li v-for="(stat, key) in benderStatistics" v-bind:key="`stat-${key}`">
-      {{ key }}: <b>{{ stat }}</b>
-    </li>
-  </ul>
-  <!-- <pre>{{benderStatistics}}</pre> -->
+  <BenderStatistics :userList="listOfUsers" />
 
   <hr />
 
