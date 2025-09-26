@@ -204,7 +204,7 @@ export default {
   <h2>Statistiche</h2>
 
   <ul>
-    <li v-for="(stat, key) in benderStatistics">
+    <li v-for="(stat, key) in benderStatistics" v-bind:key="`stat-${key}`">
       {{ key }}: <b>{{ stat }}</b>
     </li>
   </ul>
@@ -219,13 +219,13 @@ export default {
 
   <p v-if="favouriteList.length == 0">Non ci sono utenti preferiti</p>
   <ul v-else>
-    <li v-for="user in favouriteList">{{ user.fullName }}</li>
+    <li v-for="user in favouriteList" v-bind:key="`favourite-${user}`">{{ user.fullName }}</li>
   </ul>
 
   <h3>Totale utenti <b>{{ listOfUsers.length }}</b></h3>
 
   <ul v-if="listOfUsers.length > 0">
-    <li v-for="(user, index) in listOfUsers">
+    <li v-for="(user, index) in listOfUsers" v-bind:key="`userlistitem-${user.id}`">
       <h3>{{ user.fullName }}</h3>
       <!-- <p>Index: {{index}}</p> -->
       <p v-if="index == 0">Primo utente</p>
@@ -235,7 +235,7 @@ export default {
 
       <p>Animali:</p>
       <ul>
-        <li v-for="animal in user.animals">{{ animal }}</li>
+        <li v-for="animal in user.animals" v-bind:key="`pet-${animal}`">{{ animal }}</li>
       </ul>
 
       <button @click="handleAddToFavouriteUser(user)" type="button">
