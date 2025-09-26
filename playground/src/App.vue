@@ -1,11 +1,10 @@
 <script>
+import BaseCounter from './components/base-counter.vue'
+
 export default {
+  components: { BaseCounter },
   data() {
     return {
-      // Contatore
-      count: 0,
-      incrementAmount: 2,
-      incrementRangeDescription: '',
       // Utenti
       newUserModel: {
         fullName: '',
@@ -95,12 +94,6 @@ export default {
     }
   },
   methods: {
-    incrementCount(...args) {
-      // console.log(this);
-      // console.log(args)
-      // this.count += 1
-      this.count += this.incrementAmount
-    },
     handleAddNewUser() {
       const newUser = {
         id: '7aff2c49-ad1f-4ebf-80b7-70bb23928558',
@@ -128,33 +121,6 @@ export default {
 
       return statistics
     },
-    incrementDescription() {
-      const value = this.incrementAmount
-
-      if (value <= 5) {
-        return 'basso'
-      } else if (value > 100) {
-        return 'altissimo'
-      } else if (value > 20) {
-        return 'alto'
-      }
-
-      return 'medio'
-    },
-  },
-  watch: {
-    incrementAmount(newValue) {
-      console.log(`watch incrementDescription:`, newValue)
-      if (newValue <= 5) {
-        this.incrementRangeDescription = 'basso'
-      } else if (newValue > 100) {
-        this.incrementRangeDescription = 'altissimo'
-      } else if (newValue > 20) {
-        this.incrementRangeDescription = 'alto'
-      } else {
-        this.incrementRangeDescription = 'medio'
-      }
-    },
   },
 }
 </script>
@@ -162,25 +128,7 @@ export default {
 <template>
   <h1>Hello Playground</h1>
 
-  <h2>Contatore</h2>
-
-  <p :data-increment-by="incrementAmount">Contatore: <b>{{ count }}</b></p>
-
-  <div>
-    <label for="incrementAmountRef">Valore incrementale</label>
-    <!-- <input id="incrementAmountRef" v-model="incrementAmount" type="text"> -->
-    <input id="incrementAmountRef" v-model="incrementAmount" type="number" />
-
-    <!-- <p v-if="incrementAmount <= 5">Valore incrementale <b>basso</b></p>
-        <p v-else-if="incrementAmount > 20">Valore incrementale <b>alto</b></p>
-        <p v-else-if="incrementAmount > 100">Valore incrementale <b>altissimo</b></p>
-        <p v-else>Valore incrementale <b>medio</b></p> -->
-    <!-- <p>Valore incrementale <b>{{incrementRangeDescription}}</b></p> -->
-    <p>Valore incrementale <b>{{ incrementDescription }}</b></p>
-  </div>
-
-  <!-- <button v-on:click="incrementCount" type="button">Incrementa</button> -->
-  <button @click="incrementCount" type="button">Incrementa</button>
+  <BaseCounter />
 
   <hr />
 
