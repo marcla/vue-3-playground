@@ -1,9 +1,10 @@
 <script>
 import BaseCounter from './components/base-counter.vue'
 import BenderStatistics from './components/bender-statistics.vue'
+import UserCard from './components/user-card.vue'
 
 export default {
-  components: { BaseCounter, BenderStatistics },
+  components: { BaseCounter, BenderStatistics, UserCard },
   data() {
     return {
       // Utenti
@@ -155,21 +156,7 @@ export default {
 
   <ul v-if="listOfUsers.length > 0">
     <li v-for="(user, index) in listOfUsers" v-bind:key="`userlistitem-${user.id}`">
-      <h3>{{ user.fullName }}</h3>
-      <!-- <p>Index: {{index}}</p> -->
-      <p v-if="index == 0">Primo utente</p>
-      <p v-else-if="index == listOfUsers.length - 1">Ultimo utente</p>
-
-      <p>Lavoro: {{ user.job }}</p>
-
-      <p>Animali:</p>
-      <ul>
-        <li v-for="animal in user.animals" v-bind:key="`pet-${animal}`">{{ animal }}</li>
-      </ul>
-
-      <button @click="handleAddToFavouriteUser(user)" type="button">
-        ⭐️ Aggiungi ai preferiti
-      </button>
+      <UserCard @favourite="handleAddToFavouriteUser" :user="user" :index="index" :totalCount="listOfUsers.length" />
     </li>
   </ul>
   <p v-else>Non ci sono utenti nella lista</p>
