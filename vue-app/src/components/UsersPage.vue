@@ -1,56 +1,29 @@
-<script>
-import { computed, ref } from 'vue';
-
+<script setup>
+import { computed, onMounted, ref } from 'vue';
 import UserCard from './UserCard.vue';
 
 const USERS_URL = `https://jsonplaceholder.typicode.com/users`;
 
-export default {
-  async setup() {
-    // let message = `It's works!`;
-    const message = ref(`It's works!`);
+const message = ref(`It's works!`);
+const userList = await fetch(USERS_URL)
+  .then(response => new Promise(r => setTimeout(r, 2500)).then(() => response.json()))
 
-    const userList = await fetch(USERS_URL)
-      .then(response => new Promise(r => setTimeout(r, 2500)).then(() => response.json()))
+const randomizeMessage = () => {
+  const randomIndex = Math.floor(Math.random() * userList.length);
+  const randomUserName = userList[randomIndex].name;
 
-    const randomizeMessage = () => {
-      const randomIndex = Math.floor(Math.random() * userList.length);
-      const randomUserName = userList[randomIndex].name;
-
-      console.log(randomUserName);
-      // message = randomUserName;
-      message.value = randomUserName;
-    }
-
-    console.log(typeof message, message)
-
-    const uppercaseMessage = computed(() => {
-      return `${message.value.toUpperCase()} (${message.value.length})`
-    })
-
-    return {
-      // message: message
-      message,
-      userList,
-      randomizeMessage,
-      uppercaseMessage,
-    }
-  },
-  components: { UserCard },
-  // data: () => ({
-  //   userList: [],
-  // }),
-  // methods: {
-  //   async fetchUserList() {
-  //     this.userList = await fetch(USERS_URL)
-  //       .then(response => response.json());
-  //   }
-  // },
-  created() {
-    console.log(`UsersPage`, this.message, typeof this.message);
-    // this.fetchUserList();
-  }
+  console.log(randomUserName);
+  // message = randomUserName;
+  message.value = randomUserName;
 }
+
+console.log(typeof message, message)
+
+const uppercaseMessage = computed(() => {
+  return `${message.value.toUpperCase()} (${message.value.length})`
+})
+
+onMounted(() => console.log(`onMounted: UsersPage`, message, typeof message))
 
 </script>
 
