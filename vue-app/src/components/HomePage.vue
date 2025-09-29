@@ -1,4 +1,13 @@
-<script></script>
+<script setup>
+import { computed } from 'vue';
+import { userStore } from '@/composable/useUserStore';
+
+const state = userStore;
+
+const shortUserList = computed(
+  () => state.userList.slice(0, 3)
+)
+</script>
 
 <template>
   <main>
@@ -7,6 +16,13 @@
       This is a place to manage various things: todos, users, posts, etc.
       Whatever your mind desires!
     </p>
+
+    <h2>Primi utenti della lista</h2>
+    <ul>
+      <li v-for="user in shortUserList" :key="user.id">
+        {{ user.name }}
+      </li>
+    </ul>
   </main>
 </template>
 
