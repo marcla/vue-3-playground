@@ -4,25 +4,33 @@ import UserCard from './UserCard.vue';
 const USERS_URL = `https://jsonplaceholder.typicode.com/users`;
 
 export default {
-  components: { UserCard },
-  // data() {
-  //   return {}
-  // }
-  // data: () => {
-  //   return {}
-  // }
-  data: () => ({
-    userList: [],
-  }),
-  methods: {
-    async fetchUserList() {
-      this.userList = await fetch(USERS_URL)
-        .then(response => response.json());
+  async setup() {
+    const message = `It's works!`;
+
+    const userList = await fetch(USERS_URL)
+      .then(response => response.json());
+
+    await new Promise(r => setTimeout(r(), 4000))
+
+    return {
+      // message: message
+      message,
+      userList,
     }
   },
+  components: { UserCard },
+  // data: () => ({
+  //   userList: [],
+  // }),
+  // methods: {
+  //   async fetchUserList() {
+  //     this.userList = await fetch(USERS_URL)
+  //       .then(response => response.json());
+  //   }
+  // },
   created() {
-    console.log(`UserCard`, `created`);
-    this.fetchUserList();
+    console.log(`UsersPage`, this.message);
+    // this.fetchUserList();
   }
 }
 
@@ -37,7 +45,7 @@ export default {
     </ul>
     <p v-else>La lista degli utenti è vuota</p>
 
-    <!-- <pre>{{ userList }}</pre> -->
+    <pre>{{ userList }}</pre>
 
     <button type="button" @click="fetchUserList">Carica utenti</button>
   </main>

@@ -10,7 +10,7 @@ export default {
     UsersPage,
   },
   data: () => ({
-    currentPage: "Home",
+    currentPage: "Users",
   }),
   computed: {
     renderPage() {
@@ -44,7 +44,13 @@ export default {
     </nav>
   </header>
 
-  <component :is="renderPage" />
+  <Suspense>
+    <component :is="renderPage" />
+
+    <template v-slot:fallback>
+      <p>⏳ Caricamento in corso...</p>
+    </template>
+  </Suspense>
 </template>
 
 <style>
