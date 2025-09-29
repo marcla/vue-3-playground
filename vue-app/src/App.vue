@@ -1,11 +1,83 @@
-<script setup></script>
+<script>
+import HomePage from "./components/HomePage.vue";
+import LoginPage from "./components/LoginPage.vue";
+
+export default {
+  components: {
+    HomePage,
+    LoginPage,
+  },
+  data: () => ({
+    currentPage: "Home",
+  }),
+  computed: {
+    renderPage() {
+      return this.currentPage + "Page";
+    },
+  },
+  methods: {
+    showHomePage() {
+      this.currentPage = "Home";
+    },
+    showLoginPage() {
+      this.currentPage = "Login";
+    },
+  },
+};
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <header class="header">
+    <span class="logo">
+      ⭐️ Vue App
+    </span>
+
+    <nav class="nav">
+      <a href="#" @click.prevent="showHomePage">Home</a>
+      <a href="#" @click.prevent="showLoginPage">Login</a>
+    </nav>
+  </header>
+
+  <component :is="renderPage" />
 </template>
 
-<style scoped></style>
+<style>
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+span.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+span.logo img {
+  margin-right: 8px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav a {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.nav a:last-child {
+  padding-right: 0;
+}
+</style>
