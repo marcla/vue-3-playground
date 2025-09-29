@@ -1,16 +1,27 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import UserCard from './UserCard.vue';
 
 const USERS_URL = `https://jsonplaceholder.typicode.com/users`;
 
+const state = reactive({
+  selectedUser: undefined,
+  userList: []
+})
 const message = ref(`It's works!`);
-const userList = await fetch(USERS_URL)
-  .then(response => new Promise(r => setTimeout(r, 2500)).then(() => response.json()))
+
+// const userList = await fetch(USERS_URL)
+//   .then(response => new Promise(r => setTimeout(r, 1000)).then(() => response.json()))
+async function fetchUserList() {
+  const response = await fetch(USERS_URL)
+    .then(response => new Promise(r => setTimeout(r, 1000)).then(() => response.json()))
+
+  return response
+}
 
 const randomizeMessage = () => {
-  const randomIndex = Math.floor(Math.random() * userList.length);
-  const randomUserName = userList[randomIndex].name;
+  const randomIndex = Math.floor(Math.random() * state.userList.length);
+  const randomUserName = state.userList[randomIndex].name;
 
   console.log(randomUserName);
   // message = randomUserName;
@@ -23,7 +34,11 @@ const uppercaseMessage = computed(() => {
   return `${message.value.toUpperCase()} (${message.value.length})`
 })
 
+const handleChangeUser = user => state.selectedUser = user
+
 onMounted(() => console.log(`onMounted: UsersPage`, message, typeof message))
+
+state.userList = await fetchUserList()
 
 </script>
 
@@ -37,8 +52,10 @@ onMounted(() => console.log(`onMounted: UsersPage`, message, typeof message))
 
     <hr>
 
-    <ul v-if="userList.length > 0">
-      <UserCard v-for="user in userList" :key="`user-${user.id}`" :user="user" />
+    <p v-if="state.selectedUser" style="margin: 24px 0;"><b>Utente selezionato:</b> {{ state.selectedUser.name }}</p>
+
+    <ul v-if="state.userList.length > 0">
+      <UserCard v-for="user in state.userList" :key="`user-${user.id}`" :user="user" @select-user="handleChangeUser" />
     </ul>
     <p v-else>La lista degli utenti è vuota</p>
 

@@ -7,6 +7,15 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits([
+  'selectUser'
+])
+
+// const handleSelectUser = user => {
+//   // console.log(user);
+//   emit('selectUser', user);
+// }
+
 // export default {
 //   props: {
 //     user: {
@@ -33,5 +42,8 @@ const props = defineProps({
     <p>
       {{ props.user.address.street }} {{ props.user.address.city }} ({{ props.user.address.zipcode }})
     </p>
+
+    <!-- <button type="button" @click="handleSelectUser(props.user)">Seleziona utente</button> -->
+    <button type="button" @click="emit('selectUser', props.user);">Seleziona utente</button>
   </li>
 </template>
