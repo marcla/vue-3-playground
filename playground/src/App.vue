@@ -2,9 +2,10 @@
 import BaseCounter from './components/base-counter.vue'
 import BenderStatistics from './components/bender-statistics.vue'
 import UserCard from './components/user-card.vue'
+import BaseLayout from './components/base-layout.vue'
 
 export default {
-  components: { BaseCounter, BenderStatistics, UserCard },
+  components: { BaseCounter, BenderStatistics, UserCard, BaseLayout },
   data() {
     return {
       // Utenti
@@ -117,49 +118,57 @@ export default {
 <template>
   <h1>Hello Playground</h1>
 
-  <BaseCounter />
+  <BaseLayout>
+    <template v-slot:sidebar>
+      <BaseCounter />
+    </template>
 
-  <hr />
+    <template v-slot:content>
+      <BenderStatistics :userList="listOfUsers" />
 
-  <h2>Aggiunti utente</h2>
+      <hr />
 
-  <fieldset>
-    <legend><b>Nuovo utente</b></legend>
+      <h2 v-if="message.includes('!')">{{ message.toUpperCase() }}</h2>
+      <p v-else>{{ message }}</p>
 
-    <label for="userFullName">Nome completo:</label>
-    <input @keyup.enter="handleAddNewUser" v-model="newUserModel.fullName" id="userFullName" type="text" />
+      <h3>Utenti preferiti</h3>
 
-    <p>
-      <button @click="handleAddNewUser" type="button">Salva</button>
-    </p>
-  </fieldset>
+      <p v-if="favouriteList.length == 0">Non ci sono utenti preferiti</p>
+      <ul v-else>
+        <li v-for="user in favouriteList" v-bind:key="`favourite-${user}`">{{ user.fullName }}</li>
+      </ul>
 
-  <pre>{{ newUserModel }}</pre>
+      <h3>Totale utenti <b>{{ listOfUsers.length }}</b></h3>
 
-  <hr />
+      <ul v-if="listOfUsers.length > 0">
+        <li v-for="(user, index) in listOfUsers" v-bind:key="`userlistitem-${user.id}`">
+          <UserCard @favourite="handleAddToFavouriteUser" :user="user" :index="index"
+            :totalCount="listOfUsers.length" />
+        </li>
+      </ul>
+      <p v-else>Non ci sono utenti nella lista</p>
+    </template>
 
-  <BenderStatistics :userList="listOfUsers" />
+    <template v-slot:footer>
 
-  <hr />
+      <h2>Aggiunti utente</h2>
 
-  <h2 v-if="message.includes('!')">{{ message.toUpperCase() }}</h2>
-  <p v-else>{{ message }}</p>
+      <fieldset>
+        <legend><b>Nuovo utente</b></legend>
 
-  <h3>Utenti preferiti</h3>
+        <label for="userFullName">Nome completo:</label>
+        <input @keyup.enter="handleAddNewUser" v-model="newUserModel.fullName" id="userFullName" type="text" />
 
-  <p v-if="favouriteList.length == 0">Non ci sono utenti preferiti</p>
-  <ul v-else>
-    <li v-for="user in favouriteList" v-bind:key="`favourite-${user}`">{{ user.fullName }}</li>
-  </ul>
+        <p>
+          <button @click="handleAddNewUser" type="button">Salva</button>
+        </p>
+      </fieldset>
 
-  <h3>Totale utenti <b>{{ listOfUsers.length }}</b></h3>
+      <pre>{{ newUserModel }}</pre>
 
-  <ul v-if="listOfUsers.length > 0">
-    <li v-for="(user, index) in listOfUsers" v-bind:key="`userlistitem-${user.id}`">
-      <UserCard @favourite="handleAddToFavouriteUser" :user="user" :index="index" :totalCount="listOfUsers.length" />
-    </li>
-  </ul>
-  <p v-else>Non ci sono utenti nella lista</p>
+    </template>
+
+  </BaseLayout>
 </template>
 
 <style scoped></style>

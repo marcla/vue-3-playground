@@ -1,6 +1,4 @@
 <script>
-import { computed } from 'vue';
-
 export default {
   props: {
     user: {
