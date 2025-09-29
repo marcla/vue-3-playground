@@ -1,4 +1,25 @@
-<script></script>
+<script>
+const USERS_URL = `https://jsonplaceholder.typicode.com/users`;
+
+export default {
+  // data() {
+  //   return {}
+  // }
+  // data: () => {
+  //   return {}
+  // }
+  data: () => ({
+    userList: [],
+  }),
+  methods: {
+    async fetchUserList() {
+      this.userList = await fetch(USERS_URL)
+        .then(response => response.json());
+    }
+  }
+}
+
+</script>
 
 <template>
   <main>
@@ -6,6 +27,10 @@
     <p>
       it's works!
     </p>
+
+    <pre>{{ userList }}</pre>
+
+    <button type="button" @click="fetchUserList">Carica utenti</button>
   </main>
 </template>
 
