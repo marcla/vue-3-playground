@@ -45,7 +45,7 @@ export default {
   </header>
 
   <Suspense>
-    <component :is="renderPage" />
+    <component :is="renderPage" :key="renderPage" />
 
     <template v-slot:fallback>
       <p>⏳ Caricamento in corso...</p>

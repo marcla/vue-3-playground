@@ -1,21 +1,39 @@
 <script>
+import { computed, ref } from 'vue';
+
 import UserCard from './UserCard.vue';
 
 const USERS_URL = `https://jsonplaceholder.typicode.com/users`;
 
 export default {
   async setup() {
-    const message = `It's works!`;
+    // let message = `It's works!`;
+    const message = ref(`It's works!`);
 
     const userList = await fetch(USERS_URL)
-      .then(response => response.json());
+      .then(response => new Promise(r => setTimeout(r, 2500)).then(() => response.json()))
 
-    await new Promise(r => setTimeout(r(), 4000))
+    const randomizeMessage = () => {
+      const randomIndex = Math.floor(Math.random() * userList.length);
+      const randomUserName = userList[randomIndex].name;
+
+      console.log(randomUserName);
+      // message = randomUserName;
+      message.value = randomUserName;
+    }
+
+    console.log(typeof message, message)
+
+    const uppercaseMessage = computed(() => {
+      return `${message.value.toUpperCase()} (${message.value.length})`
+    })
 
     return {
       // message: message
       message,
       userList,
+      randomizeMessage,
+      uppercaseMessage,
     }
   },
   components: { UserCard },
@@ -29,7 +47,7 @@ export default {
   //   }
   // },
   created() {
-    console.log(`UsersPage`, this.message);
+    console.log(`UsersPage`, this.message, typeof this.message);
     // this.fetchUserList();
   }
 }
@@ -39,6 +57,12 @@ export default {
 <template>
   <main>
     <h1>Users page</h1>
+
+    <!-- <h2>{{ message }}</h2> -->
+    <h2>{{ uppercaseMessage }}</h2>
+    <button type="button" @click="randomizeMessage">Aggiorna messaggio</button>
+
+    <hr>
 
     <ul v-if="userList.length > 0">
       <UserCard v-for="user in userList" :key="`user-${user.id}`" :user="user" />
