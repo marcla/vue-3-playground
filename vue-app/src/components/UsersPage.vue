@@ -19,6 +19,10 @@ export default {
       this.userList = await fetch(USERS_URL)
         .then(response => response.json());
     }
+  },
+  created() {
+    console.log(`UserCard`, `created`);
+    this.fetchUserList();
   }
 }
 
