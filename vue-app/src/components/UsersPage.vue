@@ -1,7 +1,10 @@
 <script>
+import UserCard from './UserCard.vue';
+
 const USERS_URL = `https://jsonplaceholder.typicode.com/users`;
 
 export default {
+  components: { UserCard },
   // data() {
   //   return {}
   // }
@@ -24,11 +27,13 @@ export default {
 <template>
   <main>
     <h1>Users page</h1>
-    <p>
-      it's works!
-    </p>
 
-    <pre>{{ userList }}</pre>
+    <ul v-if="userList.length > 0">
+      <UserCard v-for="user in userList" :key="`user-${user.id}`" :user="user" />
+    </ul>
+    <p v-else>La lista degli utenti è vuota</p>
+
+    <!-- <pre>{{ userList }}</pre> -->
 
     <button type="button" @click="fetchUserList">Carica utenti</button>
   </main>
