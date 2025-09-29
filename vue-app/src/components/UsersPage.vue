@@ -42,7 +42,7 @@ onMounted(() => console.log(`onMounted: UsersPage`, message, typeof message))
     </ul>
     <p v-else>La lista degli utenti è vuota</p>
 
-    <pre>{{ userList }}</pre>
+    <!-- <pre>{{ userList }}</pre> -->
 
     <button type="button" @click="fetchUserList">Carica utenti</button>
   </main>
