@@ -2,8 +2,10 @@
 import { computed, ref } from 'vue';
 import UserCard from './UserCard.vue';
 import { userStore, fetchUserList } from '@/composable/useUserStore';
+import { useCount } from '@/composable/useCounter';
 
 const state = userStore;
+const countState = useCount();
 const message = ref(`It's works!`);
 
 const randomizeMessage = () => {
@@ -26,6 +28,17 @@ state.userList = await fetchUserList()
 <template>
   <main>
     <h1>Users page</h1>
+
+    <p>
+      <b>Counter:</b> {{ countState.globalCount }}
+      <button @click="countState.increaseGlobalCount" type="button">Incrementa global count</button>
+    </p>
+    <p>
+      <b>Local Counter:</b> {{ countState.localCount }}
+      <button @click="countState.increaseLocalCount" type="button">Incrementa global count</button>
+    </p>
+
+    <hr>
 
     <!-- <h2>{{ message }}</h2> -->
     <h2>{{ uppercaseMessage }}</h2>

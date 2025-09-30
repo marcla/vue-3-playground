@@ -1,5 +1,8 @@
 <script setup>
+import { useCount } from '@/composable/useCounter';
 import { shortUserList } from '@/composable/useUserStore';
+
+const countState = useCount();
 </script>
 
 <template>
@@ -9,6 +12,19 @@ import { shortUserList } from '@/composable/useUserStore';
       This is a place to manage various things: todos, users, posts, etc.
       Whatever your mind desires!
     </p>
+
+    <hr>
+
+    <p>
+      <b>Counter:</b> {{ countState.globalCount }}
+      <button @click="countState.increaseGlobalCount" type="button">Incrementa global count</button>
+    </p>
+    <p>
+      <b>Local Counter:</b> {{ countState.localCount }}
+      <button @click="countState.increaseLocalCount" type="button">Incrementa global count</button>
+    </p>
+
+    <hr>
 
     <h2>Primi utenti della lista</h2>
     <ul>
