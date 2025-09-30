@@ -1,8 +1,9 @@
 <script setup>
 import { useCount } from '@/composable/useCounter';
-import { shortUserList } from '@/composable/useUserStore';
+import { useUserStore } from '@/stores/user-store';
 
 const countState = useCount();
+const state = useUserStore();
 </script>
 
 <template>
@@ -27,8 +28,9 @@ const countState = useCount();
     <hr>
 
     <h2>Primi utenti della lista</h2>
+    <pre>{{ state.shortUserList }}</pre>
     <ul>
-      <li v-for="user in shortUserList" :key="user.id">
+      <li v-for="user in state.shortUserList" :key="user.id">
         {{ user.name }}
       </li>
     </ul>

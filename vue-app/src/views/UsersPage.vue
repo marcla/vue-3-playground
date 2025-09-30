@@ -1,10 +1,10 @@
 <script setup>
 import { computed, ref } from 'vue';
 import UserCard from '@/components/UserCard.vue';
-import { userStore, fetchUserList } from '@/composable/useUserStore';
 import { useCount } from '@/composable/useCounter';
+import { useUserStore } from '@/stores/user-store';
 
-const state = userStore;
+const state = useUserStore();
 const countState = useCount();
 const message = ref(`It's works!`);
 const color = ref('white');
@@ -22,7 +22,7 @@ const uppercaseMessage = computed(() => {
 
 const handleChangeUser = user => state.selectedUser = user
 
-state.userList = await fetchUserList()
+await state.fetchUserList()
 
 </script>
 
