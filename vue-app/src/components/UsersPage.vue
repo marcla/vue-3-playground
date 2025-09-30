@@ -7,6 +7,7 @@ import { useCount } from '@/composable/useCounter';
 const state = userStore;
 const countState = useCount();
 const message = ref(`It's works!`);
+const color = ref('white');
 
 const randomizeMessage = () => {
   const randomIndex = Math.floor(Math.random() * state.userList.length);
@@ -29,13 +30,20 @@ state.userList = await fetchUserList()
   <main>
     <h1>Users page</h1>
 
+    <pre>{{ color }}</pre>
+    <input type="color" v-model="color">
+
+    <hr>
+
     <p>
       <b>Counter:</b> {{ countState.globalCount }}
-      <button @click="countState.increaseGlobalCount" type="button">Incrementa global count</button>
+      <button class="button-highlight" @click="countState.increaseGlobalCount" type="button">Incrementa global
+        count</button>
     </p>
     <p>
       <b>Local Counter:</b> {{ countState.localCount }}
-      <button @click="countState.increaseLocalCount" type="button">Incrementa global count</button>
+      <button :class="$style.button" @click="countState.increaseLocalCount" type="button">Incrementa global
+        count</button>
     </p>
 
     <hr>
@@ -59,34 +67,17 @@ state.userList = await fetchUserList()
   </main>
 </template>
 
-<style>
-main {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  max-width: 620px;
-  margin: 0 auto;
-}
-
-main h1 {
-  margin-top: 10vh;
-  margin-bottom: 20px;
-}
-
-label {
-  margin-bottom: 5px;
-}
-
-input[type="email"] {
-  padding: 0.5rem;
-  margin-bottom: 30px;
-}
-
+<!-- <style scoped>
+/* .button-highlight {
+  background-color: coral;
+} */
 button {
-  border: 1px solid green;
-  padding: 10px;
-  color: green;
-  background-color: rgb(213, 255, 213);
-  cursor: pointer;
+  background-color: coral;
+}
+</style> -->
+
+<style module>
+.button {
+  background-color: v-bind(color);
 }
 </style>

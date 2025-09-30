@@ -44,6 +44,6 @@ const emit = defineEmits([
     </p>
 
     <!-- <button type="button" @click="handleSelectUser(props.user)">Seleziona utente</button> -->
-    <button type="button" @click="emit('selectUser', props.user);">Seleziona utente</button>
+    <button class="button-highlight" type="button" @click="emit('selectUser', props.user);">Seleziona utente</button>
   </li>
 </template>
