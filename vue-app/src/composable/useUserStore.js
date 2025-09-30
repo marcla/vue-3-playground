@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 
 const USERS_URL = `https://jsonplaceholder.typicode.com/users`
 
@@ -14,3 +14,5 @@ export async function fetchUserList() {
 
   return response
 }
+
+export const shortUserList = computed(() => userStore.userList.slice(0, 3) ?? [])

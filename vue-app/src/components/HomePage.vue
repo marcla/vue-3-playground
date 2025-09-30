@@ -1,12 +1,5 @@
 <script setup>
-import { computed } from 'vue';
-import { userStore } from '@/composable/useUserStore';
-
-const state = userStore;
-
-const shortUserList = computed(
-  () => state.userList.slice(0, 3)
-)
+import { shortUserList } from '@/composable/useUserStore';
 </script>
 
 <template>

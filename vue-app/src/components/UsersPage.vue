@@ -1,44 +1,23 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import UserCard from './UserCard.vue';
 import { userStore, fetchUserList } from '@/composable/useUserStore';
 
-// const USERS_URL = `https://jsonplaceholder.typicode.com/users`;
-
 const state = userStore;
-// const state = reactive({
-//   selectedUser: undefined,
-//   userList: []
-// })
 const message = ref(`It's works!`);
-
-// const userList = await fetch(USERS_URL)
-//   .then(response => new Promise(r => setTimeout(r, 1000)).then(() => response.json()))
-// async function fetchUserList() {
-//   const response = await fetch(USERS_URL)
-//     .then(response => new Promise(r => setTimeout(r, 1000)).then(() => response.json()))
-
-//   return response
-// }
 
 const randomizeMessage = () => {
   const randomIndex = Math.floor(Math.random() * state.userList.length);
   const randomUserName = state.userList[randomIndex].name;
 
-  console.log(randomUserName);
-  // message = randomUserName;
   message.value = randomUserName;
 }
-
-console.log(typeof message, message)
 
 const uppercaseMessage = computed(() => {
   return `${message.value.toUpperCase()} (${message.value.length})`
 })
 
 const handleChangeUser = user => state.selectedUser = user
-
-onMounted(() => console.log(`onMounted: UsersPage`, message, typeof message))
 
 state.userList = await fetchUserList()
 
