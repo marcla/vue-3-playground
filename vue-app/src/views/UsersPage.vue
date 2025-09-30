@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
-import UserCard from './UserCard.vue';
+import UserCard from '@/components/UserCard.vue';
 import { userStore, fetchUserList } from '@/composable/useUserStore';
 import { useCount } from '@/composable/useCounter';
 

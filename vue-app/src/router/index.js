@@ -1,4 +1,4 @@
-import HomePage from '@/components/HomePage.vue'
+import HomePage from '@/views/HomePage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -10,11 +10,11 @@ const router = createRouter({
     },
     {
       path: '/login',
-      component: () => import('@/components/LoginPage.vue'),
+      component: () => import('@/views/LoginPage.vue'),
     },
     {
       path: '/users',
-      component: () => import('@/components/UsersPage.vue'),
+      component: () => import('@/views/UsersPage.vue'),
     },
   ],
 })

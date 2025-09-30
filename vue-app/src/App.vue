@@ -1,33 +1,5 @@
 <script>
-import HomePage from "./components/HomePage.vue";
-import LoginPage from "./components/LoginPage.vue";
-import UsersPage from "./components/UsersPage.vue";
-
 export default {
-  components: {
-    HomePage,
-    LoginPage,
-    UsersPage,
-  },
-  data: () => ({
-    currentPage: "Users",
-  }),
-  computed: {
-    renderPage() {
-      return this.currentPage + "Page";
-    },
-  },
-  methods: {
-    showHomePage() {
-      this.currentPage = "Home";
-    },
-    showLoginPage() {
-      this.currentPage = "Login";
-    },
-    showUsersPage() {
-      this.currentPage = "Users";
-    },
-  },
 };
 </script>
 
@@ -95,6 +67,7 @@ span.logo img {
 .nav a:last-child {
   padding-right: 0;
 }
+
 main {
   display: flex;
   justify-content: center;
