@@ -38,14 +38,18 @@ export default {
     </span>
 
     <nav class="nav">
-      <a href="#" @click.prevent="showHomePage">Home</a>
+      <router-link to="/">Home</router-link>
+      <router-link to="/login">Login</router-link>
+      <router-link to="/users">Users</router-link>
+      <!-- <a href="#" @click.prevent="showHomePage">Home</a>
       <a href="#" @click.prevent="showLoginPage">Login</a>
-      <a href="#" @click.prevent="showUsersPage">Users</a>
+      <a href="#" @click.prevent="showUsersPage">Users</a> -->
     </nav>
   </header>
 
   <Suspense>
-    <component :is="renderPage" :key="renderPage" />
+    <!-- <component :is="renderPage" :key="renderPage" /> -->
+    <router-view />
 
     <template v-slot:fallback>
       <p>⏳ Caricamento in corso...</p>
