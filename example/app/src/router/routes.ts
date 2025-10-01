@@ -4,6 +4,10 @@ export const routes = [
     component: () => import('../views/HomePage.vue'),
   },
   {
+    path: '/sandbox',
+    component: () => import('../views/SandboxPage.vue'),
+  },
+  {
     path: '/tasks',
     component: () => import('../views/TasksPage.vue'),
   },
