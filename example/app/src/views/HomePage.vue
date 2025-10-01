@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue';
 </script>
 
 <template>
@@ -9,16 +9,12 @@ import { Icon } from '@iconify/vue'
     <div class="hero min-h-screen bg-primary text-primary-content">
       <div class="hero-content text-center">
         <div class="max-w-md">
-          <img
-            src="/pov-logo.png"
-            alt="Point of Vue Logo"
-            class="w-32 h-32 mx-auto mb-6 object-contain"
-          />
+          <img src="/pov-logo.png" alt="Point of Vue Logo" class="w-32 h-32 mx-auto mb-6 object-contain" />
           <h1 class="text-5xl font-bold mb-5">Point of Vue</h1>
           <p class="text-xl mb-8">Your personal productivity dashboard</p>
           <a href="#choose-your-focus" class="btn btn-secondary btn-lg">
             Get Started
-            <Icon icon="lucide:chevron-down" width="20" height="20" class="ml-2" />
+            <BaseIcon name="lucide:chevron-down" width="20" height="20" class="ml-2" />
           </a>
         </div>
       </div>
@@ -31,12 +27,10 @@ import { Icon } from '@iconify/vue'
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- Tasks Card -->
-          <div
-            class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-          >
+          <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
             <RouterLink to="/tasks" class="card-body text-center">
               <div class="flex justify-center mb-4">
-                <Icon icon="lucide:check-square" width="64" height="64" class="text-primary" />
+                <BaseIcon name="lucide:check-square" width="64" height="64" class="text-primary" />
               </div>
               <h3 class="card-title justify-center text-2xl mb-4">Tasks</h3>
               <p class="text-base-content/70 mb-6">
@@ -45,19 +39,17 @@ import { Icon } from '@iconify/vue'
               <div class="card-actions justify-center">
                 <span class="btn btn-primary btn-outline">
                   Manage Tasks
-                  <Icon icon="lucide:arrow-right" width="16" height="16" class="ml-2" />
+                  <BaseIcon name="lucide:arrow-right" width="16" height="16" class="ml-2" />
                 </span>
               </div>
             </RouterLink>
           </div>
 
           <!-- Planner Card -->
-          <div
-            class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-          >
+          <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
             <RouterLink to="/planner" class="card-body text-center">
               <div class="flex justify-center mb-4">
-                <Icon icon="lucide:calendar" width="64" height="64" class="text-secondary" />
+                <BaseIcon name="lucide:calendar" width="64" height="64" class="text-secondary" />
               </div>
               <h3 class="card-title justify-center text-2xl mb-4">Weekly Planner</h3>
               <p class="text-base-content/70 mb-6">
@@ -66,19 +58,17 @@ import { Icon } from '@iconify/vue'
               <div class="card-actions justify-center">
                 <span class="btn btn-secondary btn-outline">
                   Plan Week
-                  <Icon icon="lucide:arrow-right" width="16" height="16" class="ml-2" />
+                  <BaseIcon name="lucide:arrow-right" width="16" height="16" class="ml-2" />
                 </span>
               </div>
             </RouterLink>
           </div>
 
           <!-- Reflection Card -->
-          <div
-            class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-          >
+          <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
             <RouterLink to="/reflection" class="card-body text-center">
               <div class="flex justify-center mb-4">
-                <Icon icon="lucide:bar-chart-3" width="64" height="64" class="text-warning" />
+                <BaseIcon name="lucide:bar-chart-3" width="64" height="64" class="text-warning" />
               </div>
               <h3 class="card-title justify-center text-2xl mb-4">Weekly Reflection</h3>
               <p class="text-base-content/70 mb-6">
@@ -87,7 +77,7 @@ import { Icon } from '@iconify/vue'
               <div class="card-actions justify-center">
                 <span class="btn btn-warning btn-outline">
                   View Analytics
-                  <Icon icon="lucide:arrow-right" width="16" height="16" class="ml-2" />
+                  <BaseIcon name="lucide:arrow-right" width="16" height="16" class="ml-2" />
                 </span>
               </div>
             </RouterLink>
@@ -108,7 +98,7 @@ import { Icon } from '@iconify/vue'
           <div class="card bg-base-100 shadow-lg">
             <div class="card-body text-center">
               <div class="flex justify-center mb-4">
-                <Icon icon="lucide:clock" width="48" height="48" class="text-primary" />
+                <BaseIcon name="lucide:clock" width="48" height="48" class="text-primary" />
               </div>
               <h4 class="card-title justify-center text-lg mb-2">Time Tracking</h4>
               <p class="text-sm text-base-content/70">
@@ -120,7 +110,7 @@ import { Icon } from '@iconify/vue'
           <div class="card bg-base-100 shadow-lg">
             <div class="card-body text-center">
               <div class="flex justify-center mb-4">
-                <Icon icon="lucide:target" width="48" height="48" class="text-secondary" />
+                <BaseIcon name="lucide:target" width="48" height="48" class="text-secondary" />
               </div>
               <h4 class="card-title justify-center text-lg mb-2">Goal Setting</h4>
               <p class="text-sm text-base-content/70">
@@ -132,7 +122,7 @@ import { Icon } from '@iconify/vue'
           <div class="card bg-base-100 shadow-lg">
             <div class="card-body text-center">
               <div class="flex justify-center mb-4">
-                <Icon icon="lucide:bar-chart" width="48" height="48" class="text-warning" />
+                <BaseIcon name="lucide:bar-chart" width="48" height="48" class="text-warning" />
               </div>
               <h4 class="card-title justify-center text-lg mb-2">Progress Analytics</h4>
               <p class="text-sm text-base-content/70">
@@ -144,7 +134,7 @@ import { Icon } from '@iconify/vue'
           <div class="card bg-base-100 shadow-lg">
             <div class="card-body text-center">
               <div class="flex justify-center mb-4">
-                <Icon icon="lucide:layers" width="48" height="48" class="text-error" />
+                <BaseIcon name="lucide:layers" width="48" height="48" class="text-error" />
               </div>
               <h4 class="card-title justify-center text-lg mb-2">Area Organization</h4>
               <p class="text-sm text-base-content/70">
@@ -165,11 +155,11 @@ import { Icon } from '@iconify/vue'
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <RouterLink to="/tasks" class="btn btn-primary btn-lg">
-            <Icon icon="lucide:check" width="20" height="20" class="mr-2" />
+            <BaseIcon name="lucide:check" width="20" height="20" class="mr-2" />
             Start with Tasks
           </RouterLink>
           <RouterLink to="/planner" class="btn btn-secondary btn-lg">
-            <Icon icon="lucide:calendar" width="20" height="20" class="mr-2" />
+            <BaseIcon name="lucide:calendar" width="20" height="20" class="mr-2" />
             Plan Your Week
           </RouterLink>
         </div>

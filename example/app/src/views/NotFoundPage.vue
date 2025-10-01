@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 import { RouterLink } from 'vue-router'
 
 const router = useRouter()
@@ -16,12 +16,7 @@ const goBack = () => {
       <div class="max-w-md">
         <!-- 404 Icon -->
         <div class="mb-8">
-          <Icon
-            icon="lucide:bug"
-            width="120"
-            height="120"
-            class="mx-auto text-error animate-bounce"
-          />
+          <BaseIcon name="lucide:bug" width="120" height="120" class="mx-auto text-error animate-bounce" />
         </div>
 
         <!-- Error Code -->
@@ -33,10 +28,7 @@ const goBack = () => {
         <div class="space-y-4 mb-8">
           <div class="mockup-code text-left">
             <pre data-prefix="$"><code>cd /page/you/wanted</code></pre>
-            <pre
-              data-prefix=">"
-              class="text-warning"
-            ><code>bash: cd: No such file or directory</code></pre>
+            <pre data-prefix=">" class="text-warning"><code>bash: cd: No such file or directory</code></pre>
             <pre data-prefix="$"><code>ls -la</code></pre>
             <pre data-prefix=">" class="text-error"><code>total 0</code></pre>
             <pre data-prefix="$"><code>echo "Where am I?"</code></pre>
@@ -44,7 +36,7 @@ const goBack = () => {
           </div>
 
           <div class="alert alert-warning">
-            <Icon icon="lucide:terminal" width="20" height="20" />
+            <BaseIcon name="lucide:terminal" width="20" height="20" />
             <span>
               <strong>Debug tip:</strong> Have you tried turning it off and on again? Or maybe check
               your URL for typos...
@@ -55,12 +47,12 @@ const goBack = () => {
         <!-- Action Buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <button @click="goBack" class="btn btn-ghost">
-            <Icon icon="lucide:arrow-left" width="20" height="20" class="mr-2" />
+            <BaseIcon name="lucide:arrow-left" width="20" height="20" class="mr-2" />
             Go Back
           </button>
 
           <RouterLink to="/" class="btn btn-primary">
-            <Icon icon="lucide:home" width="20" height="20" class="mr-2" />
+            <BaseIcon name="lucide:home" width="20" height="20" class="mr-2" />
             Return to Home
           </RouterLink>
         </div>

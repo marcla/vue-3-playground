@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 
 // Define props with defaults
 const props = defineProps({
@@ -52,13 +52,13 @@ watch(
         <div class="flex items-center gap-3">
           <!-- Header Icon -->
           <div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center">
-            <Icon icon="lucide:trash-2" width="24" height="24" class="text-error" />
+            <BaseIcon name="lucide:trash-2" width="24" height="24" class="text-error" />
           </div>
           <h3 class="text-2xl font-bold text-base-content">{{ title }}</h3>
         </div>
 
         <button @click="closeModal" class="btn btn-sm btn-circle btn-ghost" :disabled="isLoading">
-          <Icon icon="lucide:x" width="20" height="20" />
+          <BaseIcon name="lucide:x" width="20" height="20" />
         </button>
       </div>
 
@@ -73,14 +73,8 @@ watch(
           Cancel
         </button>
         <button type="button" @click="confirmDelete" class="btn btn-error" :disabled="isLoading">
-          <Icon
-            v-if="isLoading"
-            icon="lucide:loader-2"
-            width="16"
-            height="16"
-            class="animate-spin"
-          />
-          <Icon v-else icon="lucide:trash-2" width="16" height="16" />
+          <BaseIcon v-if="isLoading" name="lucide:loader-2" width="16" height="16" class="animate-spin" />
+          <BaseIcon v-else name="lucide:trash-2" width="16" height="16" />
           {{ isLoading ? 'Deleting...' : 'Delete' }}
         </button>
       </div>

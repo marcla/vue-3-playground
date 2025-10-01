@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 import { useTaskStore } from '@/stores/taskStore'
 import { useTimeEntryStore } from '@/stores/timeEntryStore'
 import DeleteConfirmModal from '@/components/DeleteConfirmModal.vue'
@@ -332,7 +332,7 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
     <div class="mb-8">
       <div class="flex items-center gap-4 mb-4">
         <button @click="goBackToTasks" class="btn btn-ghost btn-circle" title="Back to Tasks">
-          <Icon icon="lucide:arrow-left" width="20" height="20" />
+          <BaseIcon name="lucide:arrow-left" width="20" height="20" />
         </button>
 
         <div class="flex-1">
@@ -340,12 +340,9 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
             {{ currentTask?.title || 'Task Details' }}
           </h1>
           <div v-if="taskWeek" class="flex items-center gap-2 text-base-content/70">
-            <Icon icon="lucide:calendar" width="16" height="16" />
-            <button
-              @click="goToWeekPage"
-              class="hover:text-primary transition-colors cursor-pointer"
-              title="Go to week page"
-            >
+            <BaseIcon name="lucide:calendar" width="16" height="16" />
+            <button @click="goToWeekPage" class="hover:text-primary transition-colors cursor-pointer"
+              title="Go to week page">
               {{ taskWeek.id }}
             </button>
           </div>
@@ -353,28 +350,17 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
 
         <!-- Task Navigation -->
         <div class="flex items-center gap-2">
-          <button
-            @click="goToPreviousTask"
-            :disabled="!canGoToPrevious"
-            class="btn btn-circle btn-primary btn-sm"
+          <button @click="goToPreviousTask" :disabled="!canGoToPrevious" class="btn btn-circle btn-primary btn-sm"
             :class="{
               'btn-disabled opacity-30 cursor-not-allowed': !canGoToPrevious,
-            }"
-            title="Previous Task"
-          >
-            <Icon icon="lucide:chevron-left" width="16" height="16" />
+            }" title="Previous Task">
+            <BaseIcon name="lucide:chevron-left" width="16" height="16" />
           </button>
 
-          <button
-            @click="goToNextTask"
-            :disabled="!canGoToNext"
-            class="btn btn-circle btn-primary btn-sm"
-            :class="{
-              'btn-disabled opacity-30 cursor-not-allowed': !canGoToNext,
-            }"
-            title="Next Task"
-          >
-            <Icon icon="lucide:chevron-right" width="16" height="16" />
+          <button @click="goToNextTask" :disabled="!canGoToNext" class="btn btn-circle btn-primary btn-sm" :class="{
+            'btn-disabled opacity-30 cursor-not-allowed': !canGoToNext,
+          }" title="Next Task">
+            <BaseIcon name="lucide:chevron-right" width="16" height="16" />
           </button>
         </div>
       </div>
@@ -388,12 +374,7 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
 
     <!-- Task Not Found -->
     <div v-else-if="!currentTask" class="text-center py-16">
-      <Icon
-        icon="lucide:search-x"
-        width="64"
-        height="64"
-        class="mx-auto text-base-content/30 mb-4"
-      />
+      <BaseIcon name="lucide:search-x" width="64" height="64" class="mx-auto text-base-content/30 mb-4" />
       <h3 class="text-xl font-semibold text-base-content/70 mb-2">Task not found</h3>
       <p class="text-base-content/50 mb-4">The requested task could not be found.</p>
       <button @click="goBackToTasks" class="btn btn-primary">Back to Tasks</button>
@@ -407,17 +388,10 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
           <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-6">
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-4">
-                <Icon
-                  :icon="getStatusIcon(currentTask.status)"
-                  width="24"
-                  height="24"
-                  :class="getStatusColor(currentTask.status)"
-                />
-                <select
-                  :value="currentTask.status"
-                  @change="handleStatusChange"
-                  class="select select-bordered select-sm"
-                >
+                <BaseIcon :name="getStatusIcon(currentTask.status)" width="24" height="24"
+                  :class="getStatusColor(currentTask.status)" />
+                <select :value="currentTask.status" @change="handleStatusChange"
+                  class="select select-bordered select-sm">
                   <option value="not_started">Not Started</option>
                   <option value="in_progress">In Progress</option>
                   <option value="completed">Completed</option>
@@ -430,11 +404,7 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
               </div>
 
               <div class="flex flex-wrap gap-2 mb-4">
-                <span
-                  v-for="area in currentTask.areas"
-                  :key="area"
-                  class="badge badge-outline badge-lg"
-                >
+                <span v-for="area in currentTask.areas" :key="area" class="badge badge-outline badge-lg">
                   {{ area }}
                 </span>
               </div>
@@ -466,14 +436,11 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
               </div>
               <div class="stat p-4">
                 <div class="stat-title text-xs">Efficiency</div>
-                <div
-                  class="stat-value text-lg"
-                  :class="{
-                    'text-success': timeStats.efficiency <= 100,
-                    'text-warning': timeStats.efficiency > 100 && timeStats.efficiency <= 150,
-                    'text-error': timeStats.efficiency > 150,
-                  }"
-                >
+                <div class="stat-value text-lg" :class="{
+                  'text-success': timeStats.efficiency <= 100,
+                  'text-warning': timeStats.efficiency > 100 && timeStats.efficiency <= 150,
+                  'text-error': timeStats.efficiency > 150,
+                }">
                   {{ timeStats.efficiency }}%
                 </div>
               </div>
@@ -488,16 +455,11 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
                 {{ timeStats.efficiency }}% of estimated time
               </span>
             </div>
-            <progress
-              class="progress w-full"
-              :class="{
-                'progress-success': timeStats.efficiency <= 100,
-                'progress-warning': timeStats.efficiency > 100 && timeStats.efficiency <= 150,
-                'progress-error': timeStats.efficiency > 150,
-              }"
-              :value="Math.min(200, timeStats.efficiency)"
-              max="200"
-            ></progress>
+            <progress class="progress w-full" :class="{
+              'progress-success': timeStats.efficiency <= 100,
+              'progress-warning': timeStats.efficiency > 100 && timeStats.efficiency <= 150,
+              'progress-error': timeStats.efficiency > 150,
+            }" :value="Math.min(200, timeStats.efficiency)" max="200"></progress>
             <div class="flex justify-between text-xs text-base-content/60 mt-1">
               <span>0%</span>
               <span>100%</span>
@@ -512,7 +474,7 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-primary">
-              <Icon icon="lucide:timer" width="32" height="32" />
+              <BaseIcon name="lucide:timer" width="32" height="32" />
             </div>
             <div class="stat-title">Total Tracked</div>
             <div class="stat-value text-primary">{{ formatTime(timeStats.totalTracked) }}</div>
@@ -523,19 +485,16 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-accent">
-              <Icon icon="lucide:trending-up" width="32" height="32" />
+              <BaseIcon name="lucide:trending-up" width="32" height="32" />
             </div>
             <div class="stat-title">Time Variance</div>
-            <div
-              class="stat-value text-accent"
-              :class="{
-                'text-success': timeStats.variance <= 0,
-                'text-warning':
-                  timeStats.variance > 0 &&
-                  timeStats.variance <= currentTask.estimatedMinutes * 0.5,
-                'text-error': timeStats.variance > currentTask.estimatedMinutes * 0.5,
-              }"
-            >
+            <div class="stat-value text-accent" :class="{
+              'text-success': timeStats.variance <= 0,
+              'text-warning':
+                timeStats.variance > 0 &&
+                timeStats.variance <= currentTask.estimatedMinutes * 0.5,
+              'text-error': timeStats.variance > currentTask.estimatedMinutes * 0.5,
+            }">
               {{ timeStats.variance >= 0 ? '+' : '' }}{{ formatTime(Math.abs(timeStats.variance)) }}
             </div>
             <div class="stat-desc">vs. estimated</div>
@@ -545,7 +504,7 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-info">
-              <Icon icon="lucide:calendar-clock" width="32" height="32" />
+              <BaseIcon name="lucide:calendar-clock" width="32" height="32" />
             </div>
             <div class="stat-title">Days Worked</div>
             <div class="stat-value text-info">{{ timeEntriesByDate.length }}</div>
@@ -559,35 +518,23 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
         <div class="card-body">
           <div class="flex justify-between items-center mb-4">
             <h3 class="card-title">Time Entries ({{ taskTimeEntries.length }})</h3>
-            <button
-              @click="openNewTimeEntryForm"
-              class="btn btn-primary btn-sm"
-              title="Add time entry"
-            >
-              <Icon icon="lucide:plus" width="16" height="16" class="mr-1" />
+            <button @click="openNewTimeEntryForm" class="btn btn-primary btn-sm" title="Add time entry">
+              <BaseIcon name="lucide:plus" width="16" height="16" class="mr-1" />
               Add Time Entry
             </button>
           </div>
 
           <div v-if="taskTimeEntries.length === 0" class="text-center py-8 text-base-content/60">
-            <Icon icon="lucide:clock-x" width="48" height="48" class="mx-auto mb-2" />
+            <BaseIcon name="lucide:clock-x" width="48" height="48" class="mx-auto mb-2" />
             <p class="mb-4">No time entries recorded for this task</p>
-            <button
-              @click="openNewTimeEntryForm"
-              class="btn btn-primary btn-sm"
-              title="Add first time entry"
-            >
-              <Icon icon="lucide:plus" width="16" height="16" class="mr-1" />
+            <button @click="openNewTimeEntryForm" class="btn btn-primary btn-sm" title="Add first time entry">
+              <BaseIcon name="lucide:plus" width="16" height="16" class="mr-1" />
               Add First Entry
             </button>
           </div>
 
           <div v-else class="space-y-4">
-            <div
-              v-for="dateGroup in timeEntriesByDate"
-              :key="dateGroup.date"
-              class="card bg-base-200 shadow-sm"
-            >
+            <div v-for="dateGroup in timeEntriesByDate" :key="dateGroup.date" class="card bg-base-200 shadow-sm">
               <div class="card-body p-4">
                 <div class="flex justify-between items-center mb-3">
                   <h4 class="font-semibold">{{ formatDate(dateGroup.date) }}</h4>
@@ -595,47 +542,34 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
                 </div>
 
                 <div class="space-y-2">
-                  <div
-                    v-for="entry in dateGroup.entries"
-                    :key="entry.id"
-                    class="flex items-center justify-between p-3 bg-base-100 rounded-lg"
-                  >
+                  <div v-for="entry in dateGroup.entries" :key="entry.id"
+                    class="flex items-center justify-between p-3 bg-base-100 rounded-lg">
                     <div class="flex items-center gap-3">
-                      <Icon icon="lucide:play" width="16" height="16" class="text-primary" />
+                      <BaseIcon name="lucide:play" width="16" height="16" class="text-primary" />
                       <div>
                         <div class="font-medium">{{ formatTime(entry.minutes) }}</div>
                         <div class="text-xs text-base-content/60">
                           {{
-                            new Date(entry.startTime).toLocaleTimeString('en-US', {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })
+  new Date(entry.startTime).toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
                           }}
                         </div>
                       </div>
                     </div>
 
                     <div class="flex items-center gap-3">
-                      <div
-                        v-if="entry.notes"
-                        class="text-sm text-base-content/70 max-w-xs truncate"
-                      >
+                      <div v-if="entry.notes" class="text-sm text-base-content/70 max-w-xs truncate">
                         {{ entry.notes }}
                       </div>
                       <div class="flex items-center gap-1">
-                        <button
-                          @click="openEditTimeEntryForm(entry)"
-                          class="btn btn-xs btn-ghost"
-                          title="Edit entry"
-                        >
-                          <Icon icon="lucide:edit" width="12" height="12" />
+                        <button @click="openEditTimeEntryForm(entry)" class="btn btn-xs btn-ghost" title="Edit entry">
+                          <BaseIcon name="lucide:edit" width="12" height="12" />
                         </button>
-                        <button
-                          @click="deleteTimeEntry(entry)"
-                          class="btn btn-xs btn-ghost text-error"
-                          title="Delete entry"
-                        >
-                          <Icon icon="lucide:trash-2" width="12" height="12" />
+                        <button @click="deleteTimeEntry(entry)" class="btn btn-xs btn-ghost text-error"
+                          title="Delete entry">
+                          <BaseIcon name="lucide:trash-2" width="12" height="12" />
                         </button>
                       </div>
                     </div>
@@ -653,12 +587,12 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
           <h3 class="card-title mb-4">Actions</h3>
           <div class="flex flex-wrap gap-4">
             <button @click="goToWeekPage" class="btn btn-outline btn-primary" :disabled="!taskWeek">
-              <Icon icon="lucide:calendar" width="16" height="16" class="mr-2" />
+              <BaseIcon name="lucide:calendar" width="16" height="16" class="mr-2" />
               View Week
             </button>
 
             <button @click="goBackToTasks" class="btn btn-ghost">
-              <Icon icon="lucide:list" width="16" height="16" class="mr-2" />
+              <BaseIcon name="lucide:list" width="16" height="16" class="mr-2" />
               All Tasks
             </button>
           </div>
@@ -667,22 +601,14 @@ const openEditTimeEntryForm = (timeEntry: TimeEntry) => {
     </div>
 
     <!-- Time Entry Form Modal -->
-    <TimeEntryFormModal
-      :is-open="timeEntryFormModal.isOpen.value"
-      :task-id="taskId"
-      :time-entry="timeEntryFormModal.editingItem.value"
-      @close="timeEntryFormModal.close"
-    />
+    <TimeEntryFormModal :is-open="timeEntryFormModal.isOpen.value" :task-id="taskId"
+      :time-entry="timeEntryFormModal.editingItem.value" @close="timeEntryFormModal.close" />
 
     <!-- Delete Time Entry Confirmation Modal -->
-    <DeleteConfirmModal
-      :is-open="timeEntryDeleteModal.isOpen.value"
-      :title="`Delete Time Entry`"
+    <DeleteConfirmModal :is-open="timeEntryDeleteModal.isOpen.value" :title="`Delete Time Entry`"
       :message="`Are you sure you want to delete this time entry (${timeEntryDeleteModal.editingItem.value ? formatTime(timeEntryDeleteModal.editingItem.value.minutes) : ''})? This action cannot be undone.`"
-      :is-loading="timeEntryDeleteModal.isLoading.value"
-      @close="timeEntryDeleteModal.close"
-      @confirm="timeEntryDeleteModal.confirm"
-    />
+      :is-loading="timeEntryDeleteModal.isLoading.value" @close="timeEntryDeleteModal.close"
+      @confirm="timeEntryDeleteModal.confirm" />
   </div>
 </template>
 

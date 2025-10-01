@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 import BaseModal from './BaseModal.vue'
 import type { Week } from '../types'
 
@@ -242,16 +242,10 @@ defineExpose({
 </script>
 
 <template>
-  <BaseModal
-    :is-open="isOpen"
-    :title="modalTitle"
-    max-width="lg"
-    :is-loading="isLoading"
-    @close="close"
-  >
+  <BaseModal :is-open="isOpen" :title="modalTitle" max-width="lg" :is-loading="isLoading" @close="close">
     <template #header-icon>
       <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-        <Icon icon="lucide:calendar" width="24" height="24" class="text-primary" />
+        <BaseIcon name="lucide:calendar" width="24" height="24" class="text-primary" />
       </div>
     </template>
 
@@ -262,14 +256,8 @@ defineExpose({
         <label class="label" for="start-date">
           <span class="label-text font-medium">Week Start Date *</span>
         </label>
-        <input
-          id="start-date"
-          v-model="weekForm.startDate"
-          class="input input-bordered w-full"
-          type="date"
-          :disabled="isLoading"
-          required
-        />
+        <input id="start-date" v-model="weekForm.startDate" class="input input-bordered w-full" type="date"
+          :disabled="isLoading" required />
         <div class="label">
           <span class="label-text-alt text-base-content/60">
             Week will run from {{ formatDate(weekForm.startDate) }} to {{ formatDate(endDate) }}
@@ -279,7 +267,7 @@ defineExpose({
 
       <!-- Preview Week ID -->
       <div v-if="weekForm.startDate" class="alert alert-info">
-        <Icon icon="lucide:info" width="20" height="20" />
+        <BaseIcon name="lucide:info" width="20" height="20" />
         <span>
           Week ID will be: <strong>{{ generateWeekId(weekForm.startDate) }}</strong>
           <br />
@@ -292,14 +280,8 @@ defineExpose({
         <label class="label" for="week-description">
           <span class="label-text font-medium">Description</span>
         </label>
-        <textarea
-          id="week-description"
-          v-model="weekForm.description"
-          class="textarea textarea-bordered w-full"
-          rows="3"
-          placeholder="Add goals, notes, or themes for this week..."
-          :disabled="isLoading"
-        ></textarea>
+        <textarea id="week-description" v-model="weekForm.description" class="textarea textarea-bordered w-full"
+          rows="3" placeholder="Add goals, notes, or themes for this week..." :disabled="isLoading"></textarea>
       </div>
     </form>
 
@@ -307,22 +289,17 @@ defineExpose({
       <button type="button" @click="close" class="btn btn-outline" :disabled="isLoading">
         Cancel
       </button>
-      <button
-        type="submit"
-        @click="saveWeek"
-        class="btn btn-primary"
-        :disabled="!isFormValid || isLoading"
-      >
-        <Icon v-if="isLoading" icon="lucide:loader-2" width="16" height="16" class="animate-spin" />
-        <Icon v-else :icon="isEditMode ? 'lucide:save' : 'lucide:plus'" width="16" height="16" />
+      <button type="submit" @click="saveWeek" class="btn btn-primary" :disabled="!isFormValid || isLoading">
+        <BaseIcon v-if="isLoading" name="lucide:loader-2" width="16" height="16" class="animate-spin" />
+        <BaseIcon v-else :name="isEditMode ? 'lucide:save' : 'lucide:plus'" width="16" height="16" />
         {{
-          isLoading
-            ? isEditMode
-              ? 'Updating...'
-              : 'Creating...'
-            : isEditMode
-              ? 'Update Week'
-              : 'Create Week'
+        isLoading
+        ? isEditMode
+        ? 'Updating...'
+        : 'Creating...'
+        : isEditMode
+        ? 'Update Week'
+        : 'Create Week'
         }}
       </button>
     </template>

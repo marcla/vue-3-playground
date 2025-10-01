@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import type { PropType } from 'vue'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 import { useTaskStore } from '@/stores/taskStore'
 import BaseModal from './BaseModal.vue'
 
@@ -248,13 +248,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <BaseModal
-    :is-open="isOpen"
-    :title="modalTitle"
-    :is-loading="isLoading"
-    @close="close"
-    max-width="2xl"
-  >
+  <BaseModal :is-open="isOpen" :title="modalTitle" :is-loading="isLoading" @close="close" max-width="2xl">
     <!-- Form -->
     <form @submit.prevent="saveTask" class="space-y-6">
       <!-- Title -->
@@ -262,15 +256,8 @@ onMounted(async () => {
         <label class="label" for="task-title">
           <span class="label-text font-medium">Task Title *</span>
         </label>
-        <input
-          id="task-title"
-          v-model="taskForm.title"
-          class="input input-bordered w-full"
-          type="text"
-          placeholder="Enter task title..."
-          :disabled="isLoading"
-          required
-        />
+        <input id="task-title" v-model="taskForm.title" class="input input-bordered w-full" type="text"
+          placeholder="Enter task title..." :disabled="isLoading" required />
       </div>
 
       <!-- Description -->
@@ -278,14 +265,8 @@ onMounted(async () => {
         <label class="label" for="task-description">
           <span class="label-text font-medium">Description</span>
         </label>
-        <textarea
-          id="task-description"
-          v-model="taskForm.description"
-          class="textarea textarea-bordered w-full"
-          rows="3"
-          placeholder="Describe your task..."
-          :disabled="isLoading"
-        ></textarea>
+        <textarea id="task-description" v-model="taskForm.description" class="textarea textarea-bordered w-full"
+          rows="3" placeholder="Describe your task..." :disabled="isLoading"></textarea>
       </div>
 
       <!-- Week Selection -->
@@ -293,13 +274,8 @@ onMounted(async () => {
         <label class="label" for="task-week">
           <span class="label-text font-medium">Week *</span>
         </label>
-        <select
-          id="task-week"
-          v-model="taskForm.weekId"
-          class="select select-bordered w-full"
-          :disabled="isLoading"
-          required
-        >
+        <select id="task-week" v-model="taskForm.weekId" class="select select-bordered w-full" :disabled="isLoading"
+          required>
           <option value="">Select a week...</option>
           <option v-for="week in weeks" :key="week.id" :value="week.id">
             {{ week.id }} ({{ new Date(week.startDate).toLocaleDateString() }})
@@ -314,17 +290,10 @@ onMounted(async () => {
           <span class="label-text font-medium">Areas * (Select at least one)</span>
         </label>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-          <button
-            v-for="area in availableAreas"
-            :key="area"
-            type="button"
-            @click="toggleArea(area)"
-            :class="[
+          <button v-for="area in availableAreas" :key="area" type="button" @click="toggleArea(area)" :class="[
               'btn btn-sm',
               taskForm.areas.includes(area) ? 'btn-primary' : 'btn-outline btn-primary',
-            ]"
-            :disabled="isLoading"
-          >
+            ]" :disabled="isLoading">
             {{ area }}
           </button>
         </div>
@@ -336,16 +305,8 @@ onMounted(async () => {
           <span class="label-text font-medium">Estimated Time (minutes) *</span>
         </label>
         <div class="flex items-center gap-4">
-          <input
-            id="task-time"
-            v-model.number="taskForm.estimatedMinutes"
-            class="input input-bordered flex-1"
-            type="number"
-            min="5"
-            step="5"
-            :disabled="isLoading"
-            required
-          />
+          <input id="task-time" v-model.number="taskForm.estimatedMinutes" class="input input-bordered flex-1"
+            type="number" min="5" step="5" :disabled="isLoading" required />
           <div class="badge badge-info">{{ formatTime(taskForm.estimatedMinutes) }}</div>
         </div>
       </div>
@@ -355,12 +316,7 @@ onMounted(async () => {
         <label class="label" for="task-status">
           <span class="label-text font-medium">Status</span>
         </label>
-        <select
-          id="task-status"
-          v-model="taskForm.status"
-          class="select select-bordered w-full"
-          :disabled="isLoading"
-        >
+        <select id="task-status" v-model="taskForm.status" class="select select-bordered w-full" :disabled="isLoading">
           <option value="not_started">Not Started</option>
           <option value="in_progress">In Progress</option>
           <option value="completed">Completed</option>
@@ -373,22 +329,17 @@ onMounted(async () => {
       <button type="button" @click="close" class="btn btn-outline" :disabled="isLoading">
         Cancel
       </button>
-      <button
-        type="submit"
-        @click="saveTask"
-        class="btn btn-primary"
-        :disabled="!isFormValid || isLoading"
-      >
-        <Icon v-if="isLoading" icon="lucide:loader-2" width="16" height="16" class="animate-spin" />
-        <Icon v-else :icon="isEditMode ? 'lucide:save' : 'lucide:plus'" width="16" height="16" />
+      <button type="submit" @click="saveTask" class="btn btn-primary" :disabled="!isFormValid || isLoading">
+        <BaseIcon v-if="isLoading" name="lucide:loader-2" width="16" height="16" class="animate-spin" />
+        <BaseIcon v-else :name="isEditMode ? 'lucide:save' : 'lucide:plus'" width="16" height="16" />
         {{
-          isLoading
-            ? isEditMode
-              ? 'Updating...'
-              : 'Creating...'
-            : isEditMode
-              ? 'Update Task'
-              : 'Create Task'
+        isLoading
+        ? isEditMode
+        ? 'Updating...'
+        : 'Creating...'
+        : isEditMode
+        ? 'Update Task'
+        : 'Create Task'
         }}
       </button>
     </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 import type { Task, Week, TimeEntry } from '../types'
 import { useTimeEntryStore } from '../stores/timeEntryStore'
 import { useTaskStore } from '../stores/taskStore'
@@ -268,7 +268,7 @@ const formatDate = (dateStr: string) => {
     <div class="mb-8">
       <div class="flex items-center gap-4 mb-4">
         <button @click="goBackToPlanner" class="btn btn-ghost btn-circle" title="Back to Planner">
-          <Icon icon="lucide:arrow-left" width="20" height="20" />
+          <BaseIcon name="lucide:arrow-left" width="20" height="20" />
         </button>
 
         <div class="flex-1">
@@ -282,40 +282,24 @@ const formatDate = (dateStr: string) => {
 
         <!-- Week Navigation -->
         <div class="flex items-center gap-2">
-          <button
-            @click="goToPreviousWeek"
-            :disabled="!canGoToPrevious"
-            class="btn btn-circle btn-primary btn-sm"
+          <button @click="goToPreviousWeek" :disabled="!canGoToPrevious" class="btn btn-circle btn-primary btn-sm"
             :class="{
               'btn-disabled opacity-30 cursor-not-allowed': !canGoToPrevious,
-            }"
-            title="Previous Week"
-          >
-            <Icon icon="lucide:chevron-left" width="16" height="16" />
+            }" title="Previous Week">
+            <BaseIcon name="lucide:chevron-left" width="16" height="16" />
           </button>
 
-          <button
-            @click="goToCurrentWeek"
-            class="btn btn-primary btn-sm"
-            :class="{
-              'btn-outline': !currentWeek?.isCurrentWeek,
-            }"
-            title="Go to Current Week"
-          >
-            <Icon icon="lucide:calendar-days" width="14" height="14" class="mr-1" />
+          <button @click="goToCurrentWeek" class="btn btn-primary btn-sm" :class="{
+            'btn-outline': !currentWeek?.isCurrentWeek,
+          }" title="Go to Current Week">
+            <BaseIcon name="lucide:calendar-days" width="14" height="14" class="mr-1" />
             Current
           </button>
 
-          <button
-            @click="goToNextWeek"
-            :disabled="!canGoToNext"
-            class="btn btn-circle btn-primary btn-sm"
-            :class="{
-              'btn-disabled opacity-30 cursor-not-allowed': !canGoToNext,
-            }"
-            title="Next Week"
-          >
-            <Icon icon="lucide:chevron-right" width="16" height="16" />
+          <button @click="goToNextWeek" :disabled="!canGoToNext" class="btn btn-circle btn-primary btn-sm" :class="{
+            'btn-disabled opacity-30 cursor-not-allowed': !canGoToNext,
+          }" title="Next Week">
+            <BaseIcon name="lucide:chevron-right" width="16" height="16" />
           </button>
         </div>
       </div>
@@ -331,12 +315,7 @@ const formatDate = (dateStr: string) => {
 
     <!-- Week Not Found -->
     <div v-else-if="!currentWeek" class="text-center py-16">
-      <Icon
-        icon="lucide:calendar-x"
-        width="64"
-        height="64"
-        class="mx-auto text-base-content/30 mb-4"
-      />
+      <BaseIcon name="lucide:calendar-x" width="64" height="64" class="mx-auto text-base-content/30 mb-4" />
       <h3 class="text-xl font-semibold text-base-content/70 mb-2">Week not found</h3>
       <p class="text-base-content/50 mb-4">The requested week could not be found.</p>
       <button @click="goBackToPlanner" class="btn btn-primary">Back to Planner</button>
@@ -349,7 +328,7 @@ const formatDate = (dateStr: string) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-primary">
-              <Icon icon="lucide:target" width="32" height="32" />
+              <BaseIcon name="lucide:target" width="32" height="32" />
             </div>
             <div class="stat-title">Completion Rate</div>
             <div class="stat-value text-primary">{{ completionStats.completionRate }}%</div>
@@ -362,7 +341,7 @@ const formatDate = (dateStr: string) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-secondary">
-              <Icon icon="lucide:clock" width="32" height="32" />
+              <BaseIcon name="lucide:clock" width="32" height="32" />
             </div>
             <div class="stat-title">Time Planned</div>
             <div class="stat-value text-secondary">
@@ -375,7 +354,7 @@ const formatDate = (dateStr: string) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-accent">
-              <Icon icon="lucide:activity" width="32" height="32" />
+              <BaseIcon name="lucide:activity" width="32" height="32" />
             </div>
             <div class="stat-title">Time Actual</div>
             <div class="stat-value text-accent">
@@ -383,11 +362,11 @@ const formatDate = (dateStr: string) => {
             </div>
             <div class="stat-desc">
               {{
-                getProgressPercentage(
-                  currentWeek.totalActualMinutes,
-                  currentWeek.totalPlannedMinutes,
-                )
-              }}% of planned
+  getProgressPercentage(
+    currentWeek.totalActualMinutes,
+    currentWeek.totalPlannedMinutes,
+  )
+}}% of planned
             </div>
           </div>
         </div>
@@ -409,49 +388,43 @@ const formatDate = (dateStr: string) => {
                 }}% completed
               </span>
             </div>
-            <progress
-              class="progress w-full"
-              :class="{
-                'progress-success':
-                  getProgressStatus(
-                    getProgressPercentage(
-                      currentWeek.totalActualMinutes,
-                      currentWeek.totalPlannedMinutes,
-                    ),
-                  ) === 'completed',
-                'progress-warning':
-                  getProgressStatus(
-                    getProgressPercentage(
-                      currentWeek.totalActualMinutes,
-                      currentWeek.totalPlannedMinutes,
-                    ),
-                  ) === 'on-track',
-                'progress-error':
-                  getProgressStatus(
-                    getProgressPercentage(
-                      currentWeek.totalActualMinutes,
-                      currentWeek.totalPlannedMinutes,
-                    ),
-                  ) === 'concerning',
-                'progress-info':
-                  getProgressStatus(
-                    getProgressPercentage(
-                      currentWeek.totalActualMinutes,
-                      currentWeek.totalPlannedMinutes,
-                    ),
-                  ) === 'behind',
-              }"
-              :value="
-                Math.min(
-                  100,
+            <progress class="progress w-full" :class="{
+              'progress-success':
+                getProgressStatus(
                   getProgressPercentage(
                     currentWeek.totalActualMinutes,
                     currentWeek.totalPlannedMinutes,
                   ),
-                )
-              "
-              max="100"
-            ></progress>
+                ) === 'completed',
+              'progress-warning':
+                getProgressStatus(
+                  getProgressPercentage(
+                    currentWeek.totalActualMinutes,
+                    currentWeek.totalPlannedMinutes,
+                  ),
+                ) === 'on-track',
+              'progress-error':
+                getProgressStatus(
+                  getProgressPercentage(
+                    currentWeek.totalActualMinutes,
+                    currentWeek.totalPlannedMinutes,
+                  ),
+                ) === 'concerning',
+              'progress-info':
+                getProgressStatus(
+                  getProgressPercentage(
+                    currentWeek.totalActualMinutes,
+                    currentWeek.totalPlannedMinutes,
+                  ),
+                ) === 'behind',
+            }" :value="Math.min(
+              100,
+              getProgressPercentage(
+                currentWeek.totalActualMinutes,
+                currentWeek.totalPlannedMinutes,
+              ),
+            )
+              " max="100"></progress>
           </div>
         </div>
       </div>
@@ -460,31 +433,22 @@ const formatDate = (dateStr: string) => {
       <div class="card bg-base-100 shadow">
         <div class="card-body">
           <h3 class="card-title mb-4">Daily Time Distribution</h3>
-          <div
-            v-if="dailyTimeDistribution.length === 0"
-            class="text-center py-8 text-base-content/60"
-          >
+          <div v-if="dailyTimeDistribution.length === 0" class="text-center py-8 text-base-content/60">
             No time tracking data available for this week.
           </div>
           <div v-else-if="maxDailyMinutes <= 1" class="text-center py-8 text-base-content/60">
             No time entries recorded for this week.
           </div>
           <div v-else class="space-y-4">
-            <div
-              v-for="day in dailyTimeDistribution"
-              :key="day.date"
-              class="flex items-center gap-4"
-            >
+            <div v-for="day in dailyTimeDistribution" :key="day.date" class="flex items-center gap-4">
               <div class="w-16 text-sm font-medium text-base-content/70">
                 {{ day.day }}
               </div>
               <div class="flex-1 bg-base-200 rounded-full h-6 relative">
-                <div
-                  class="bg-primary rounded-full h-6 transition-all duration-300 flex items-center justify-end pr-2"
+                <div class="bg-primary rounded-full h-6 transition-all duration-300 flex items-center justify-end pr-2"
                   :style="{
                     width: `${day.minutes > 0 ? Math.max(15, (day.minutes / maxDailyMinutes) * 100) : 0}%`,
-                  }"
-                >
+                  }">
                   <span v-if="day.minutes > 0" class="text-xs text-primary-content font-medium">
                     {{ formatTime(day.minutes) }}
                   </span>
@@ -507,15 +471,12 @@ const formatDate = (dateStr: string) => {
               <div class="card-body p-4">
                 <div class="flex justify-between items-center mb-3">
                   <h4 class="font-semibold capitalize">{{ area.area }}</h4>
-                  <div
-                    class="badge badge-lg font-semibold"
-                    :class="{
-                      'badge-success': area.completionRate >= 80,
-                      'badge-warning': area.completionRate >= 60 && area.completionRate < 80,
-                      'badge-info': area.completionRate >= 40 && area.completionRate < 60,
-                      'badge-error': area.completionRate < 40,
-                    }"
-                  >
+                  <div class="badge badge-lg font-semibold" :class="{
+                    'badge-success': area.completionRate >= 80,
+                    'badge-warning': area.completionRate >= 60 && area.completionRate < 80,
+                    'badge-info': area.completionRate >= 40 && area.completionRate < 60,
+                    'badge-error': area.completionRate < 40,
+                  }">
                     {{ area.completionRate }}%
                   </div>
                 </div>
@@ -541,7 +502,7 @@ const formatDate = (dateStr: string) => {
           <h3 class="card-title mb-4">Tasks ({{ weekTasks.length }})</h3>
 
           <div v-if="weekTasks.length === 0" class="text-center py-8 text-base-content/60">
-            <Icon icon="lucide:calendar-x" width="48" height="48" class="mx-auto mb-2" />
+            <BaseIcon name="lucide:calendar-x" width="48" height="48" class="mx-auto mb-2" />
             <p>No tasks planned for this week</p>
           </div>
 
@@ -551,22 +512,16 @@ const formatDate = (dateStr: string) => {
                 <div class="flex items-start justify-between gap-4">
                   <div class="flex-1">
                     <div class="flex items-center gap-2 mb-2">
-                      <Icon
-                        :icon="
-                          task.status === 'completed'
-                            ? 'lucide:check-circle'
-                            : task.status === 'in_progress'
-                              ? 'lucide:play-circle'
-                              : 'lucide:circle'
-                        "
-                        width="16"
-                        height="16"
-                        :class="{
+                      <BaseIcon :name="task.status === 'completed'
+                          ? 'lucide:check-circle'
+                          : task.status === 'in_progress'
+                            ? 'lucide:play-circle'
+                            : 'lucide:circle'
+                        " width="16" height="16" :class="{
                           'text-success': task.status === 'completed',
                           'text-warning': task.status === 'in_progress',
                           'text-base-content/40': task.status === 'not_started',
-                        }"
-                      />
+                        }" />
                       <h4 class="font-semibold">{{ task.title }}</h4>
                     </div>
 
@@ -575,11 +530,7 @@ const formatDate = (dateStr: string) => {
                     </p>
 
                     <div class="flex flex-wrap gap-1 mb-2">
-                      <span
-                        v-for="area in task.areas"
-                        :key="area"
-                        class="badge badge-outline badge-sm"
-                      >
+                      <span v-for="area in task.areas" :key="area" class="badge badge-outline badge-sm">
                         {{ area }}
                       </span>
                     </div>
@@ -589,14 +540,11 @@ const formatDate = (dateStr: string) => {
                     <div class="text-sm text-base-content/60">
                       {{ formatTime(task.actualMinutes) }} / {{ formatTime(task.estimatedMinutes) }}
                     </div>
-                    <div
-                      class="badge badge-sm"
-                      :class="{
-                        'badge-success': task.status === 'completed',
-                        'badge-warning': task.status === 'in_progress',
-                        'badge-ghost': task.status === 'not_started',
-                      }"
-                    >
+                    <div class="badge badge-sm" :class="{
+                      'badge-success': task.status === 'completed',
+                      'badge-warning': task.status === 'in_progress',
+                      'badge-ghost': task.status === 'not_started',
+                    }">
                       {{ task.status.replace('_', ' ') }}
                     </div>
                   </div>

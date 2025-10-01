@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 import DeleteConfirmModal from '@/components/DeleteConfirmModal.vue'
 import TaskFormModal from '@/components/TaskFormModal.vue'
 import TimeEntryFormModal from '@/components/TimeEntryFormModal.vue'
@@ -273,7 +273,7 @@ const toggleTimeEntries = (taskId: string) => {
           </p>
         </div>
         <button @click="openNewTaskForm" class="btn btn-primary" :disabled="taskStore.isLoading">
-          <Icon icon="lucide:plus" width="20" height="20" />
+          <BaseIcon name="lucide:plus" width="20" height="20" />
           Add New Task
         </button>
       </div>
@@ -283,32 +283,19 @@ const toggleTimeEntries = (taskId: string) => {
     <TaskFormModal ref="taskFormModalRef" :task="currentEditingTask" />
 
     <!-- Delete Confirmation Modal -->
-    <DeleteConfirmModal
-      :is-open="taskDeleteModal.isOpen.value"
-      :title="`Delete Task`"
+    <DeleteConfirmModal :is-open="taskDeleteModal.isOpen.value" :title="`Delete Task`"
       :message="`Are you sure you want to delete &quot;${taskDeleteModal.editingItem.value?.title}&quot;? This action cannot be undone.`"
-      :is-loading="taskDeleteModal.isLoading.value"
-      @close="taskDeleteModal.close"
-      @confirm="taskDeleteModal.confirm"
-    />
+      :is-loading="taskDeleteModal.isLoading.value" @close="taskDeleteModal.close" @confirm="taskDeleteModal.confirm" />
 
     <!-- Time Entry Form Modal -->
-    <TimeEntryFormModal
-      :is-open="timeEntryFormModal.isOpen.value"
-      :task-id="selectedTaskId"
-      :time-entry="timeEntryFormModal.editingItem.value"
-      @close="timeEntryFormModal.close"
-    />
+    <TimeEntryFormModal :is-open="timeEntryFormModal.isOpen.value" :task-id="selectedTaskId"
+      :time-entry="timeEntryFormModal.editingItem.value" @close="timeEntryFormModal.close" />
 
     <!-- Delete Time Entry Confirmation Modal -->
-    <DeleteConfirmModal
-      :is-open="timeEntryDeleteModal.isOpen.value"
-      :title="`Delete Time Entry`"
+    <DeleteConfirmModal :is-open="timeEntryDeleteModal.isOpen.value" :title="`Delete Time Entry`"
       :message="`Are you sure you want to delete this time entry (${timeEntryDeleteModal.editingItem.value ? formatTime(timeEntryDeleteModal.editingItem.value.minutes) : ''})? This action cannot be undone.`"
-      :is-loading="timeEntryDeleteModal.isLoading.value"
-      @close="timeEntryDeleteModal.close"
-      @confirm="timeEntryDeleteModal.confirm"
-    />
+      :is-loading="timeEntryDeleteModal.isLoading.value" @close="timeEntryDeleteModal.close"
+      @confirm="timeEntryDeleteModal.confirm" />
 
     <!-- Filters -->
     <div class="filters">
@@ -317,21 +304,11 @@ const toggleTimeEntries = (taskId: string) => {
           <span class="label-text font-medium">Search:</span>
         </label>
         <label class="input input-bordered flex items-center gap-2">
-          <Icon icon="lucide:search" width="16" height="16" class="text-base-content/40" />
-          <input
-            v-model="searchTerm"
-            type="text"
-            placeholder="Search tasks by title or description..."
-            class="grow"
-          />
-          <button
-            v-if="searchTerm"
-            @click="searchTerm = ''"
-            class="btn btn-ghost btn-xs"
-            type="button"
-            title="Clear search"
-          >
-            <Icon icon="lucide:x" width="14" height="14" />
+          <BaseIcon name="lucide:search" width="16" height="16" class="text-base-content/40" />
+          <input v-model="searchTerm" type="text" placeholder="Search tasks by title or description..." class="grow" />
+          <button v-if="searchTerm" @click="searchTerm = ''" class="btn btn-ghost btn-xs" type="button"
+            title="Clear search">
+            <BaseIcon name="lucide:x" width="14" height="14" />
           </button>
         </label>
       </div>
@@ -375,18 +352,13 @@ const toggleTimeEntries = (taskId: string) => {
 
     <!-- Tasks Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-      <div
-        v-for="task in filteredTasks"
-        :key="task.id"
-        class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300"
-      >
+      <div v-for="task in filteredTasks" :key="task.id"
+        class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300">
         <div class="card-body">
           <div class="flex justify-between items-start mb-4">
-            <RouterLink
-              :to="`/tasks/${task.id}`"
+            <RouterLink :to="`/tasks/${task.id}`"
               class="card-title text-lg hover:text-primary transition-colors cursor-pointer text-left"
-              title="View task details"
-            >
+              title="View task details">
               {{ task.title }}
             </RouterLink>
             <div :class="['badge', getStatusBadge(task.status)]">
@@ -404,11 +376,11 @@ const toggleTimeEntries = (taskId: string) => {
 
           <div class="space-y-2 mb-4">
             <div class="flex items-center gap-2 text-sm text-base-content/70">
-              <Icon icon="lucide:target" width="16" height="16" />
+              <BaseIcon name="lucide:target" width="16" height="16" />
               <span>Estimated: {{ formatTime(task.estimatedMinutes) }}</span>
             </div>
             <div class="flex items-center gap-2 text-sm text-base-content/70">
-              <Icon icon="lucide:clock" width="16" height="16" />
+              <BaseIcon name="lucide:clock" width="16" height="16" />
               <span>Actual: {{ formatTime(task.actualMinutes) }}</span>
             </div>
           </div>
@@ -416,34 +388,27 @@ const toggleTimeEntries = (taskId: string) => {
           <!-- Time Entries Info -->
           <div class="mb-4">
             <!-- Time Entries Summary -->
-            <div
-              v-if="getTaskTimeEntryCount(task.id) > 0"
-              class="bg-info/10 rounded-lg border border-info/20"
-            >
+            <div v-if="getTaskTimeEntryCount(task.id) > 0" class="bg-info/10 rounded-lg border border-info/20">
               <!-- Summary Header -->
               <div class="flex items-center justify-between p-3">
                 <div class="flex items-center gap-2">
-                  <Icon icon="lucide:timer" width="16" height="16" class="text-info" />
+                  <BaseIcon name="lucide:timer" width="16" height="16" class="text-info" />
                   <div class="flex-1">
                     <div class="text-sm font-medium text-info">
                       {{ formatTimeEntryInfo(task.id) }}
                     </div>
                     <div class="text-xs text-base-content/60 mt-1 flex items-center gap-4">
                       <span>Tracked: {{ formatTime(getTaskTotalTimeFromEntries(task.id)) }}</span>
-                      <span
-                        v-if="
-                          task.actualMinutes > 0 &&
-                          getTaskTotalTimeFromEntries(task.id) !== task.actualMinutes
-                        "
-                        :class="
-                          getTaskTotalTimeFromEntries(task.id) > task.actualMinutes
-                            ? 'text-warning'
-                            : 'text-success'
-                        "
-                      >
+                      <span v-if="
+                        task.actualMinutes > 0 &&
+                        getTaskTotalTimeFromEntries(task.id) !== task.actualMinutes
+                      " :class="getTaskTotalTimeFromEntries(task.id) > task.actualMinutes
+                        ? 'text-warning'
+                        : 'text-success'
+                        ">
                         {{ getTaskTotalTimeFromEntries(task.id) > task.actualMinutes ? '+' : ''
                         }}{{
-                          formatTime(getTaskTotalTimeFromEntries(task.id) - task.actualMinutes)
+  formatTime(getTaskTotalTimeFromEntries(task.id) - task.actualMinutes)
                         }}
                         vs actual
                       </span>
@@ -451,25 +416,14 @@ const toggleTimeEntries = (taskId: string) => {
                   </div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <button
-                    @click="openNewTimeEntryForm(task.id)"
-                    class="btn btn-xs btn-primary btn-outline"
-                    title="Add time entry"
-                  >
-                    <Icon icon="lucide:plus" width="12" height="12" />
+                  <button @click="openNewTimeEntryForm(task.id)" class="btn btn-xs btn-primary btn-outline"
+                    title="Add time entry">
+                    <BaseIcon name="lucide:plus" width="12" height="12" />
                   </button>
-                  <button
-                    @click="toggleTimeEntries(task.id)"
-                    class="btn btn-xs btn-ghost"
-                    :title="isTimeEntriesExpanded(task.id) ? 'Collapse entries' : 'Show entries'"
-                  >
-                    <Icon
-                      :icon="
-                        isTimeEntriesExpanded(task.id) ? 'lucide:chevron-up' : 'lucide:chevron-down'
-                      "
-                      width="16"
-                      height="16"
-                    />
+                  <button @click="toggleTimeEntries(task.id)" class="btn btn-xs btn-ghost"
+                    :title="isTimeEntriesExpanded(task.id) ? 'Collapse entries' : 'Show entries'">
+                    <BaseIcon :name="isTimeEntriesExpanded(task.id) ? 'lucide:chevron-up' : 'lucide:chevron-down'
+                      " width="16" height="16" />
                   </button>
                 </div>
               </div>
@@ -477,19 +431,12 @@ const toggleTimeEntries = (taskId: string) => {
               <!-- Expanded Time Entries List -->
               <div v-if="isTimeEntriesExpanded(task.id)" class="border-t border-info/20 p-3 pt-2">
                 <div class="space-y-2">
-                  <div
-                    v-for="entry in getTaskTimeEntries(task.id)"
-                    :key="entry.id"
-                    class="flex items-center justify-between p-2 bg-base-100 rounded border"
-                  >
+                  <div v-for="entry in getTaskTimeEntries(task.id)" :key="entry.id"
+                    class="flex items-center justify-between p-2 bg-base-100 rounded border">
                     <div class="flex-1 min-w-0">
                       <div class="flex items-center gap-2 text-sm">
-                        <Icon
-                          :icon="entry.isManual ? 'lucide:edit-3' : 'lucide:clock'"
-                          width="12"
-                          height="12"
-                          :class="entry.isManual ? 'text-warning' : 'text-primary'"
-                        />
+                        <BaseIcon :name="entry.isManual ? 'lucide:edit-3' : 'lucide:clock'" width="12" height="12"
+                          :class="entry.isManual ? 'text-warning' : 'text-primary'" />
                         <span class="font-medium">{{ formatTime(entry.minutes) }}</span>
                         <span class="text-base-content/60">
                           {{ formatDateTimeShort(entry.startTime) }}
@@ -500,19 +447,12 @@ const toggleTimeEntries = (taskId: string) => {
                       </div>
                     </div>
                     <div class="flex items-center gap-1 ml-2">
-                      <button
-                        @click="openEditTimeEntryForm(entry)"
-                        class="btn btn-xs btn-ghost"
-                        title="Edit entry"
-                      >
-                        <Icon icon="lucide:edit" width="12" height="12" />
+                      <button @click="openEditTimeEntryForm(entry)" class="btn btn-xs btn-ghost" title="Edit entry">
+                        <BaseIcon name="lucide:edit" width="12" height="12" />
                       </button>
-                      <button
-                        @click="timeEntryStore.deleteTimeEntry(entry.id)"
-                        class="btn btn-xs btn-ghost text-error"
-                        title="Delete entry"
-                      >
-                        <Icon icon="lucide:trash-2" width="12" height="12" />
+                      <button @click="timeEntryStore.deleteTimeEntry(entry.id)" class="btn btn-xs btn-ghost text-error"
+                        title="Delete entry">
+                        <BaseIcon name="lucide:trash-2" width="12" height="12" />
                       </button>
                     </div>
                   </div>
@@ -520,31 +460,23 @@ const toggleTimeEntries = (taskId: string) => {
 
                 <!-- Summary Footer -->
                 <div
-                  class="flex justify-between items-center mt-3 pt-2 border-t border-base-300 text-xs text-base-content/70"
-                >
+                  class="flex justify-between items-center mt-3 pt-2 border-t border-base-300 text-xs text-base-content/70">
                   <span>{{ getTaskTimeEntryCount(task.id) }} entries total</span>
-                  <span class="font-medium"
-                    >Total: {{ formatTime(getTaskTotalTimeFromEntries(task.id)) }}</span
-                  >
+                  <span class="font-medium">Total: {{ formatTime(getTaskTotalTimeFromEntries(task.id)) }}</span>
                 </div>
               </div>
             </div>
 
             <!-- No Time Entries State -->
-            <div
-              v-else
-              class="flex items-center justify-between p-2 text-xs text-base-content/50 border border-dashed border-base-300 rounded-lg"
-            >
+            <div v-else
+              class="flex items-center justify-between p-2 text-xs text-base-content/50 border border-dashed border-base-300 rounded-lg">
               <div class="flex items-center gap-2">
-                <Icon icon="lucide:clock" width="14" height="14" />
+                <BaseIcon name="lucide:clock" width="14" height="14" />
                 <span>No time entries yet</span>
               </div>
-              <button
-                @click="openNewTimeEntryForm(task.id)"
-                class="btn btn-xs btn-primary btn-outline"
-                title="Add first time entry"
-              >
-                <Icon icon="lucide:plus" width="12" height="12" />
+              <button @click="openNewTimeEntryForm(task.id)" class="btn btn-xs btn-primary btn-outline"
+                title="Add first time entry">
+                <BaseIcon name="lucide:plus" width="12" height="12" />
                 <span>Add</span>
               </button>
             </div>
@@ -552,29 +484,19 @@ const toggleTimeEntries = (taskId: string) => {
 
           <!-- Task Actions -->
           <div class="card-actions justify-end mt-4 pt-4 border-t border-base-300">
-            <button
-              @click="openEditTaskForm(task)"
-              class="btn btn-sm btn-outline btn-primary gap-1"
-              :disabled="taskStore.isLoading"
-              title="Edit task"
-            >
-              <Icon icon="lucide:edit" width="14" height="14" />
+            <button @click="openEditTaskForm(task)" class="btn btn-sm btn-outline btn-primary gap-1"
+              :disabled="taskStore.isLoading" title="Edit task">
+              <BaseIcon name="lucide:edit" width="14" height="14" />
               Edit
             </button>
-            <button
-              @click="openDeleteTaskModal(task)"
-              class="btn btn-sm btn-outline btn-error gap-1"
-              :disabled="taskStore.isLoading"
-              title="Delete task"
-            >
-              <Icon icon="lucide:trash-2" width="14" height="14" />
+            <button @click="openDeleteTaskModal(task)" class="btn btn-sm btn-outline btn-error gap-1"
+              :disabled="taskStore.isLoading" title="Delete task">
+              <BaseIcon name="lucide:trash-2" width="14" height="14" />
               Delete
             </button>
           </div>
 
-          <div
-            class="flex justify-between text-xs text-base-content/50 pt-4 border-t border-base-300"
-          >
+          <div class="flex justify-between text-xs text-base-content/50 pt-4 border-t border-base-300">
             <span>Week: {{ task.weekId }}</span>
             <span>Updated: {{ new Date(task.updatedAt).toLocaleDateString() }}</span>
           </div>
@@ -583,16 +505,10 @@ const toggleTimeEntries = (taskId: string) => {
     </div>
 
     <div v-if="filteredTasks.length === 0" class="text-center py-12">
-      <Icon
-        icon="lucide:search-x"
-        width="48"
-        height="48"
-        class="text-base-content/40 mx-auto mb-4"
-      />
+      <BaseIcon name="lucide:search-x" width="48" height="48" class="text-base-content/40 mx-auto mb-4" />
       <h3 class="text-xl font-semibold text-base-content mb-2">No tasks found</h3>
       <p v-if="searchTerm" class="text-base-content/70 mb-4">
-        No tasks match your search for "<strong>{{ searchTerm }}</strong
-        >".
+        No tasks match your search for "<strong>{{ searchTerm }}</strong>".
         <br />
         Try different keywords or check your spelling.
       </p>

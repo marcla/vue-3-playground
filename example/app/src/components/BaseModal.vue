@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch, useSlots } from 'vue'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 
 import type { PropType } from 'vue'
 type MaxWidthOptions = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
@@ -81,7 +81,7 @@ watch(
         </div>
 
         <button @click="closeModal" class="btn btn-sm btn-circle btn-ghost" :disabled="isLoading">
-          <Icon icon="lucide:x" width="20" height="20" />
+          <BaseIcon name="lucide:x" width="20" height="20" />
         </button>
       </div>
 

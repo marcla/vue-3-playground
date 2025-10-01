@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 import { useTaskStore } from '@/stores/taskStore'
 import WeekFormModal from '../components/WeekFormModal.vue'
 import DeleteConfirmModal from '../components/DeleteConfirmModal.vue'
@@ -261,7 +261,7 @@ const formatDateRange = (startDate: string, endDate: string) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-primary">
-              <Icon icon="lucide:calendar-days" width="24" height="24" />
+              <BaseIcon name="lucide:calendar-days" width="24" height="24" />
             </div>
             <div class="stat-title">Total Weeks</div>
             <div class="stat-value text-primary">{{ weeks?.length || 0 }}</div>
@@ -271,7 +271,7 @@ const formatDateRange = (startDate: string, endDate: string) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-secondary">
-              <Icon icon="lucide:check-square" width="24" height="24" />
+              <BaseIcon name="lucide:check-square" width="24" height="24" />
             </div>
             <div class="stat-title">Total Tasks</div>
             <div class="stat-value text-secondary">{{ taskStore.tasks?.length || 0 }}</div>
@@ -281,15 +281,15 @@ const formatDateRange = (startDate: string, endDate: string) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-accent">
-              <Icon icon="lucide:clock" width="24" height="24" />
+              <BaseIcon name="lucide:clock" width="24" height="24" />
             </div>
             <div class="stat-title">Time Planned</div>
             <div class="stat-value text-accent text-lg">
               {{
-                formatTime(
-                  weeks?.reduce((sum: number, w: any) => sum + w.totalPlannedMinutes, 0) || 0,
-                )
-              }}
+  formatTime(
+    weeks?.reduce((sum: number, w: any) => sum + w.totalPlannedMinutes, 0) || 0,
+  )
+}}
             </div>
           </div>
         </div>
@@ -297,7 +297,7 @@ const formatDateRange = (startDate: string, endDate: string) => {
         <div class="stats shadow">
           <div class="stat">
             <div class="stat-figure text-info">
-              <Icon icon="lucide:activity" width="24" height="24" />
+              <BaseIcon name="lucide:activity" width="24" height="24" />
             </div>
             <div class="stat-title">Time Actual</div>
             <div class="stat-value text-info text-lg">
@@ -318,59 +318,32 @@ const formatDateRange = (startDate: string, endDate: string) => {
         <div class="flex flex-col lg:flex-row lg:items-center gap-4">
           <!-- Week Navigation -->
           <div class="flex items-center gap-3">
-            <button
-              @click="goToPreviousWeek"
-              :disabled="!canGoToPrevious"
-              class="btn btn-circle btn-primary"
-              :class="{
-                'btn-disabled opacity-30 cursor-not-allowed': !canGoToPrevious,
-                'hover:btn-primary-focus': canGoToPrevious,
-              }"
-              title="Previous Week"
-            >
-              <Icon
-                icon="lucide:chevron-left"
-                width="20"
-                height="20"
-                :class="{
-                  'text-primary-content': canGoToPrevious,
-                  'text-base-content/30': !canGoToPrevious,
-                }"
-              />
+            <button @click="goToPreviousWeek" :disabled="!canGoToPrevious" class="btn btn-circle btn-primary" :class="{
+              'btn-disabled opacity-30 cursor-not-allowed': !canGoToPrevious,
+              'hover:btn-primary-focus': canGoToPrevious,
+            }" title="Previous Week">
+              <BaseIcon name="lucide:chevron-left" width="20" height="20" :class="{
+                'text-primary-content': canGoToPrevious,
+                'text-base-content/30': !canGoToPrevious,
+              }" />
             </button>
 
-            <button
-              @click="goToCurrentWeek"
-              class="btn btn-primary"
-              :class="{
-                'btn-outline': !selectedWeek?.isCurrentWeek,
-                'btn-primary': selectedWeek?.isCurrentWeek,
-              }"
-              title="Go to Current Week"
-            >
-              <Icon icon="lucide:calendar-days" width="16" height="16" class="mr-2" />
+            <button @click="goToCurrentWeek" class="btn btn-primary" :class="{
+              'btn-outline': !selectedWeek?.isCurrentWeek,
+              'btn-primary': selectedWeek?.isCurrentWeek,
+            }" title="Go to Current Week">
+              <BaseIcon name="lucide:calendar-days" width="16" height="16" class="mr-2" />
               Current Week
             </button>
 
-            <button
-              @click="goToNextWeek"
-              :disabled="!canGoToNext"
-              class="btn btn-circle btn-primary"
-              :class="{
-                'btn-disabled opacity-30 cursor-not-allowed': !canGoToNext,
-                'hover:btn-primary-focus': canGoToNext,
-              }"
-              title="Next Week"
-            >
-              <Icon
-                icon="lucide:chevron-right"
-                width="20"
-                height="20"
-                :class="{
-                  'text-primary-content': canGoToNext,
-                  'text-base-content/30': !canGoToNext,
-                }"
-              />
+            <button @click="goToNextWeek" :disabled="!canGoToNext" class="btn btn-circle btn-primary" :class="{
+              'btn-disabled opacity-30 cursor-not-allowed': !canGoToNext,
+              'hover:btn-primary-focus': canGoToNext,
+            }" title="Next Week">
+              <BaseIcon name="lucide:chevron-right" width="20" height="20" :class="{
+                'text-primary-content': canGoToNext,
+                'text-base-content/30': !canGoToNext,
+              }" />
             </button>
           </div>
 
@@ -379,11 +352,7 @@ const formatDateRange = (startDate: string, endDate: string) => {
             <label class="label" for="week-select">
               <span class="label-text font-medium">Select Week:</span>
             </label>
-            <select
-              id="week-select"
-              v-model="selectedWeekId"
-              class="select select-bordered w-full max-w-md"
-            >
+            <select id="week-select" v-model="selectedWeekId" class="select select-bordered w-full max-w-md">
               <option v-for="week in weeks" :key="week.id" :value="week.id">
                 {{ week.id }} - {{ formatDateRange(week.startDate, week.endDate) }}
                 <span v-if="week.isCurrentWeek">(Current)</span>
@@ -393,32 +362,20 @@ const formatDateRange = (startDate: string, endDate: string) => {
 
           <!-- Week CRUD Actions -->
           <div class="flex items-center gap-2 flex-shrink-0">
-            <button
-              @click="openCreateWeekModal"
-              class="btn btn-primary btn-sm"
-              title="Create New Week"
-            >
-              <Icon icon="lucide:plus" width="16" height="16" />
+            <button @click="openCreateWeekModal" class="btn btn-primary btn-sm" title="Create New Week">
+              <BaseIcon name="lucide:plus" width="16" height="16" />
               <span class="hidden sm:inline ml-1">New Week</span>
             </button>
 
-            <button
-              @click="openEditWeekModal"
-              class="btn btn-outline btn-primary btn-sm"
-              :disabled="!selectedWeek"
-              title="Edit Week"
-            >
-              <Icon icon="lucide:edit-3" width="16" height="16" />
+            <button @click="openEditWeekModal" class="btn btn-outline btn-primary btn-sm" :disabled="!selectedWeek"
+              title="Edit Week">
+              <BaseIcon name="lucide:edit-3" width="16" height="16" />
               <span class="hidden sm:inline ml-1">Edit</span>
             </button>
 
-            <button
-              @click="openDeleteWeekModal"
-              class="btn btn-outline btn-error btn-sm"
-              :disabled="!selectedWeek"
-              title="Delete Week"
-            >
-              <Icon icon="lucide:trash-2" width="16" height="16" />
+            <button @click="openDeleteWeekModal" class="btn btn-outline btn-error btn-sm" :disabled="!selectedWeek"
+              title="Delete Week">
+              <BaseIcon name="lucide:trash-2" width="16" height="16" />
               <span class="hidden sm:inline ml-1">Delete</span>
             </button>
           </div>
@@ -435,25 +392,19 @@ const formatDateRange = (startDate: string, endDate: string) => {
     <!-- Selected Week Display -->
     <div v-else-if="selectedWeek" class="space-y-8">
       <!-- Week Card -->
-      <div
-        class="card bg-base-100 shadow-xl border"
-        :class="{
-          'border-success bg-success/5': getWeekStatus() === 'completed',
-          'border-warning bg-warning/5': getWeekStatus() === 'in-progress',
-          'border-base-300 bg-base-100':
-            getWeekStatus() === 'not-started' || getWeekStatus() === 'no-tasks',
-        }"
-      >
+      <div class="card bg-base-100 shadow-xl border" :class="{
+        'border-success bg-success/5': getWeekStatus() === 'completed',
+        'border-warning bg-warning/5': getWeekStatus() === 'in-progress',
+        'border-base-300 bg-base-100':
+          getWeekStatus() === 'not-started' || getWeekStatus() === 'no-tasks',
+      }">
         <div class="card-body">
           <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4 mb-6">
             <div class="flex-1">
-              <h3
-                class="card-title text-primary text-xl mb-1 cursor-pointer hover:text-primary-focus transition-colors"
-                @click="goToWeekPage(selectedWeek.id)"
-                title="Click to view detailed week page"
-              >
+              <h3 class="card-title text-primary text-xl mb-1 cursor-pointer hover:text-primary-focus transition-colors"
+                @click="goToWeekPage(selectedWeek.id)" title="Click to view detailed week page">
                 {{ selectedWeek.id }}
-                <Icon icon="lucide:external-link" width="16" height="16" class="ml-1 opacity-60" />
+                <BaseIcon name="lucide:external-link" width="16" height="16" class="ml-1 opacity-60" />
               </h3>
               <p class="text-base-content/60 text-sm mb-2">
                 {{ formatDateRange(selectedWeek.startDate, selectedWeek.endDate) }}
@@ -491,49 +442,43 @@ const formatDateRange = (startDate: string, endDate: string) => {
                 }}% completed
               </span>
             </div>
-            <progress
-              class="progress w-full"
-              :class="{
-                'progress-success':
-                  getProgressStatus(
-                    getProgressPercentage(
-                      selectedWeek.totalActualMinutes,
-                      selectedWeek.totalPlannedMinutes,
-                    ),
-                  ) === 'completed',
-                'progress-warning':
-                  getProgressStatus(
-                    getProgressPercentage(
-                      selectedWeek.totalActualMinutes,
-                      selectedWeek.totalPlannedMinutes,
-                    ),
-                  ) === 'on-track',
-                'progress-error':
-                  getProgressStatus(
-                    getProgressPercentage(
-                      selectedWeek.totalActualMinutes,
-                      selectedWeek.totalPlannedMinutes,
-                    ),
-                  ) === 'concerning',
-                'progress-info':
-                  getProgressStatus(
-                    getProgressPercentage(
-                      selectedWeek.totalActualMinutes,
-                      selectedWeek.totalPlannedMinutes,
-                    ),
-                  ) === 'behind',
-              }"
-              :value="
-                Math.min(
-                  100,
+            <progress class="progress w-full" :class="{
+              'progress-success':
+                getProgressStatus(
                   getProgressPercentage(
                     selectedWeek.totalActualMinutes,
                     selectedWeek.totalPlannedMinutes,
                   ),
-                )
-              "
-              max="100"
-            ></progress>
+                ) === 'completed',
+              'progress-warning':
+                getProgressStatus(
+                  getProgressPercentage(
+                    selectedWeek.totalActualMinutes,
+                    selectedWeek.totalPlannedMinutes,
+                  ),
+                ) === 'on-track',
+              'progress-error':
+                getProgressStatus(
+                  getProgressPercentage(
+                    selectedWeek.totalActualMinutes,
+                    selectedWeek.totalPlannedMinutes,
+                  ),
+                ) === 'concerning',
+              'progress-info':
+                getProgressStatus(
+                  getProgressPercentage(
+                    selectedWeek.totalActualMinutes,
+                    selectedWeek.totalPlannedMinutes,
+                  ),
+                ) === 'behind',
+            }" :value="Math.min(
+              100,
+              getProgressPercentage(
+                selectedWeek.totalActualMinutes,
+                selectedWeek.totalPlannedMinutes,
+              ),
+            )
+              " max="100"></progress>
           </div>
 
           <div class="mb-4">
@@ -543,78 +488,62 @@ const formatDateRange = (startDate: string, endDate: string) => {
 
             <div v-if="selectedWeekTasks.length > 0" class="space-y-2 mb-3">
               <div class="flex items-center gap-2 text-sm">
-                <Icon icon="lucide:check-circle" width="16" height="16" class="text-success" />
+                <BaseIcon name="lucide:check-circle" width="16" height="16" class="text-success" />
                 <span class="text-base-content/70">
-                  {{ selectedWeekTasks.filter((t: any) => t.status === 'completed').length }}
+                  {{selectedWeekTasks.filter((t: any) => t.status === 'completed').length}}
                   completed
                 </span>
               </div>
               <div class="flex items-center gap-2 text-sm">
-                <Icon icon="lucide:play-circle" width="16" height="16" class="text-warning" />
+                <BaseIcon name="lucide:play-circle" width="16" height="16" class="text-warning" />
                 <span class="text-base-content/70">
-                  {{ selectedWeekTasks.filter((t: any) => t.status === 'in_progress').length }}
+                  {{selectedWeekTasks.filter((t: any) => t.status === 'in_progress').length}}
                   in progress
                 </span>
               </div>
               <div class="flex items-center gap-2 text-sm">
-                <Icon icon="lucide:circle" width="16" height="16" class="text-base-content/40" />
+                <BaseIcon name="lucide:circle" width="16" height="16" class="text-base-content/40" />
                 <span class="text-base-content/70">
-                  {{ selectedWeekTasks.filter((t: any) => t.status === 'not_started').length }}
+                  {{selectedWeekTasks.filter((t: any) => t.status === 'not_started').length}}
                   not started
                 </span>
               </div>
             </div>
 
             <div v-else class="flex items-center gap-2 text-base-content/50 text-sm">
-              <Icon icon="lucide:calendar-x" width="20" height="20" />
+              <BaseIcon name="lucide:calendar-x" width="20" height="20" />
               <span>No tasks planned</span>
             </div>
           </div>
 
           <div v-if="selectedWeekTasks.length > 0" class="border-t border-base-300 pt-4">
             <div class="space-y-2">
-              <div
-                v-for="(task, index) in selectedWeekTasks"
-                :key="task.id"
-                class="flex items-center gap-2 text-sm"
-                :class="{ hidden: !isTaskListExpanded && index >= 3 }"
-              >
-                <Icon
-                  :icon="
-                    task.status === 'completed'
-                      ? 'lucide:check-circle'
-                      : task.status === 'in_progress'
-                        ? 'lucide:play-circle'
-                        : 'lucide:circle'
-                  "
-                  width="14"
-                  height="14"
-                  :class="{
+              <div v-for="(task, index) in selectedWeekTasks" :key="task.id" class="flex items-center gap-2 text-sm"
+                :class="{ hidden: !isTaskListExpanded && index >= 3 }">
+                <BaseIcon :name="task.status === 'completed'
+                  ? 'lucide:check-circle'
+                  : task.status === 'in_progress'
+                    ? 'lucide:play-circle'
+                    : 'lucide:circle'
+                  " width="14" height="14" :class="{
                     'text-success': task.status === 'completed',
                     'text-warning': task.status === 'in_progress',
                     'text-base-content/40': task.status === 'not_started',
-                  }"
-                />
+                  }" />
                 <span class="flex-1 text-base-content">{{ task.title }}</span>
                 <span class="text-xs text-base-content/60">
                   {{ formatTime(task.actualMinutes) }}/{{ formatTime(task.estimatedMinutes) }}
                 </span>
               </div>
 
-              <button
-                v-if="selectedWeekTasks.length > 3"
-                @click="toggleTaskList"
-                class="btn btn-ghost btn-sm w-full gap-2 mt-2"
-              >
+              <button v-if="selectedWeekTasks.length > 3" @click="toggleTaskList"
+                class="btn btn-ghost btn-sm w-full gap-2 mt-2">
                 <span v-if="!isTaskListExpanded">
                   +{{ selectedWeekTasks.length - 3 }} more tasks
                 </span>
                 <span v-else>Show less</span>
-                <Icon
-                  :icon="isTaskListExpanded ? 'lucide:chevron-up' : 'lucide:chevron-down'"
-                  width="14"
-                  height="14"
-                />
+                <BaseIcon :name="isTaskListExpanded ? 'lucide:chevron-up' : 'lucide:chevron-down'" width="14"
+                  height="14" />
               </button>
             </div>
           </div>
@@ -624,33 +553,19 @@ const formatDateRange = (startDate: string, endDate: string) => {
 
     <!-- No Week Selected -->
     <div v-else-if="!weekIsLoading" class="text-center py-16">
-      <Icon
-        icon="lucide:calendar-x"
-        width="64"
-        height="64"
-        class="mx-auto text-base-content/30 mb-4"
-      />
+      <BaseIcon name="lucide:calendar-x" width="64" height="64" class="mx-auto text-base-content/30 mb-4" />
       <h3 class="text-xl font-semibold text-base-content/70 mb-2">No weeks available</h3>
       <p class="text-base-content/50">Create your first week to start planning!</p>
     </div>
   </div>
 
   <!-- Week Form Modal -->
-  <WeekFormModal
-    ref="weekFormModal"
-    @weekCreated="handleWeekCreated"
-    @weekUpdated="handleWeekUpdated"
-  />
+  <WeekFormModal ref="weekFormModal" @weekCreated="handleWeekCreated" @weekUpdated="handleWeekUpdated" />
 
   <!-- Delete Confirmation Modal -->
-  <DeleteConfirmModal
-    :is-open="deleteConfirmModal"
-    :title="`Delete Week ${weekToDelete?.id || ''}`"
+  <DeleteConfirmModal :is-open="deleteConfirmModal" :title="`Delete Week ${weekToDelete?.id || ''}`"
     :message="`Are you sure you want to delete this week? This action cannot be undone and will also delete all tasks associated with this week.`"
-    :is-loading="false"
-    @close="handleDeleteCancel"
-    @confirm="handleDeleteConfirm"
-  />
+    :is-loading="false" @close="handleDeleteCancel" @confirm="handleDeleteConfirm" />
 </template>
 
 <style scoped>

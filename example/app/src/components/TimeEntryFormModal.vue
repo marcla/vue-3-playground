@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 import BaseModal from './BaseModal.vue'
 
 import { useTimeEntryStore } from '../stores/timeEntryStore'
@@ -180,13 +180,8 @@ watch(
 </script>
 
 <template>
-  <BaseModal
-    :is-open="isOpen"
-    :title="modalTitle"
-    max-width="lg"
-    :is-loading="timeEntryStore.isLoading"
-    @close="closeModal"
-  >
+  <BaseModal :is-open="isOpen" :title="modalTitle" max-width="lg" :is-loading="timeEntryStore.isLoading"
+    @close="closeModal">
     <!-- Form -->
     <form @submit.prevent="saveTimeEntry" class="space-y-6">
       <!-- Entry Type -->
@@ -196,23 +191,13 @@ watch(
         </label>
         <div class="flex gap-4">
           <label class="label cursor-pointer gap-2">
-            <input
-              v-model="timeEntryForm.isManual"
-              type="radio"
-              :value="true"
-              class="radio radio-primary"
-              :disabled="timeEntryStore.isLoading"
-            />
+            <input v-model="timeEntryForm.isManual" type="radio" :value="true" class="radio radio-primary"
+              :disabled="timeEntryStore.isLoading" />
             <span class="label-text">Manual Entry</span>
           </label>
           <label class="label cursor-pointer gap-2">
-            <input
-              v-model="timeEntryForm.isManual"
-              type="radio"
-              :value="false"
-              class="radio radio-primary"
-              :disabled="timeEntryStore.isLoading"
-            />
+            <input v-model="timeEntryForm.isManual" type="radio" :value="false" class="radio radio-primary"
+              :disabled="timeEntryStore.isLoading" />
             <span class="label-text">Time Range</span>
           </label>
         </div>
@@ -223,14 +208,8 @@ watch(
         <label class="label" for="start-time">
           <span class="label-text font-medium">Start Time *</span>
         </label>
-        <input
-          id="start-time"
-          v-model="timeEntryForm.startTime"
-          class="input input-bordered w-full"
-          type="datetime-local"
-          :disabled="timeEntryStore.isLoading"
-          required
-        />
+        <input id="start-time" v-model="timeEntryForm.startTime" class="input input-bordered w-full"
+          type="datetime-local" :disabled="timeEntryStore.isLoading" required />
       </div>
 
       <!-- End Time (only for time range) -->
@@ -238,15 +217,8 @@ watch(
         <label class="label" for="end-time">
           <span class="label-text font-medium">End Time *</span>
         </label>
-        <input
-          id="end-time"
-          v-model="timeEntryForm.endTime"
-          class="input input-bordered w-full"
-          type="datetime-local"
-          :disabled="timeEntryStore.isLoading"
-          :min="timeEntryForm.startTime"
-          required
-        />
+        <input id="end-time" v-model="timeEntryForm.endTime" class="input input-bordered w-full" type="datetime-local"
+          :disabled="timeEntryStore.isLoading" :min="timeEntryForm.startTime" required />
       </div>
 
       <!-- Minutes (manual entry or calculated display) -->
@@ -257,14 +229,8 @@ watch(
           </span>
         </label>
         <div class="flex items-center gap-4">
-          <input
-            id="minutes"
-            v-model.number="timeEntryForm.minutes"
-            class="input input-bordered flex-1"
-            type="number"
-            :disabled="timeEntryStore.isLoading || !timeEntryForm.isManual"
-            :required="timeEntryForm.isManual"
-          />
+          <input id="minutes" v-model.number="timeEntryForm.minutes" class="input input-bordered flex-1" type="number"
+            :disabled="timeEntryStore.isLoading || !timeEntryForm.isManual" :required="timeEntryForm.isManual" />
           <div class="badge badge-info">{{ formatTime(timeEntryForm.minutes) }}</div>
         </div>
       </div>
@@ -274,49 +240,28 @@ watch(
         <label class="label" for="notes">
           <span class="label-text font-medium">Notes</span>
         </label>
-        <textarea
-          id="notes"
-          v-model="timeEntryForm.notes"
-          class="textarea textarea-bordered w-full"
-          rows="3"
-          placeholder="Add any notes about this time entry..."
-          :disabled="timeEntryStore.isLoading"
-        ></textarea>
+        <textarea id="notes" v-model="timeEntryForm.notes" class="textarea textarea-bordered w-full" rows="3"
+          placeholder="Add any notes about this time entry..." :disabled="timeEntryStore.isLoading"></textarea>
       </div>
     </form>
 
     <!-- Actions -->
     <template #actions>
-      <button
-        type="button"
-        @click="closeModal"
-        class="btn btn-outline"
-        :disabled="timeEntryStore.isLoading"
-      >
+      <button type="button" @click="closeModal" class="btn btn-outline" :disabled="timeEntryStore.isLoading">
         Cancel
       </button>
-      <button
-        type="submit"
-        @click="saveTimeEntry"
-        class="btn btn-primary"
-        :disabled="!isFormValid || timeEntryStore.isLoading"
-      >
-        <Icon
-          v-if="timeEntryStore.isLoading"
-          icon="lucide:loader-2"
-          width="16"
-          height="16"
-          class="animate-spin"
-        />
-        <Icon v-else :icon="isEditMode ? 'lucide:save' : 'lucide:plus'" width="16" height="16" />
+      <button type="submit" @click="saveTimeEntry" class="btn btn-primary"
+        :disabled="!isFormValid || timeEntryStore.isLoading">
+        <BaseIcon v-if="timeEntryStore.isLoading" name="lucide:loader-2" width="16" height="16" class="animate-spin" />
+        <BaseIcon v-else :name="isEditMode ? 'lucide:save' : 'lucide:plus'" width="16" height="16" />
         {{
-          timeEntryStore.isLoading
-            ? isEditMode
-              ? 'Updating...'
-              : 'Creating...'
-            : isEditMode
-              ? 'Update Entry'
-              : 'Add Entry'
+  timeEntryStore.isLoading
+    ? isEditMode
+      ? 'Updating...'
+      : 'Creating...'
+    : isEditMode
+      ? 'Update Entry'
+      : 'Add Entry'
         }}
       </button>
     </template>

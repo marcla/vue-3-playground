@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 
 import { computed } from 'vue'
 
@@ -11,13 +11,10 @@ const isHomePage = computed(() => route.path === '/')
 
 <template>
   <div class="app">
-    <header
-      v-if="!isHomePage"
-      class="navbar bg-base-100 shadow-lg sticky top-0 z-50 flex justify-between"
-    >
+    <header v-if="!isHomePage" class="navbar bg-base-100 shadow-lg sticky top-0 z-50 flex justify-between">
       <div class="navbar-start">
         <RouterLink to="/" class="btn btn-ghost text-xl font-bold text-primary">
-          <Icon icon="lucide:target" width="24" height="24" />
+          <BaseIcon source="custom" name="TurtleIcon" width="24" height="24" />
           Point of Vue
         </RouterLink>
       </div>
@@ -26,31 +23,31 @@ const isHomePage = computed(() => route.path === '/')
         <ul class="menu menu-horizontal px-1">
           <li>
             <RouterLink to="/" class="nav-item">
-              <Icon icon="lucide:home" width="18" height="18" />
+              <BaseIcon name="lucide:home" width="18" height="18" />
               Home
             </RouterLink>
           </li>
           <li>
             <RouterLink to="/tasks" class="nav-item">
-              <Icon icon="lucide:check-square" width="18" height="18" />
+              <BaseIcon name="lucide:check-square" width="18" height="18" />
               Tasks
             </RouterLink>
           </li>
           <li>
             <RouterLink to="/planner" class="nav-item">
-              <Icon icon="lucide:calendar" width="18" height="18" />
+              <BaseIcon name="lucide:calendar" width="18" height="18" />
               Planner
             </RouterLink>
           </li>
           <li>
             <RouterLink to="/reflection" class="nav-item">
-              <Icon icon="lucide:bar-chart-3" width="18" height="18" />
+              <BaseIcon name="lucide:bar-chart-3" width="18" height="18" />
               Reflection
             </RouterLink>
           </li>
           <li>
             <RouterLink to="/settings" class="nav-item">
-              <Icon icon="lucide:settings" width="18" height="18" />
+              <BaseIcon name="lucide:settings" width="18" height="18" />
               Settings
             </RouterLink>
           </li>
@@ -60,39 +57,36 @@ const isHomePage = computed(() => route.path === '/')
       <div class="navbar-end lg:hidden">
         <div class="dropdown dropdown-end">
           <div tabindex="0" role="button" class="btn btn-ghost">
-            <Icon icon="lucide:menu" width="20" height="20" />
+            <BaseIcon name="lucide:menu" width="20" height="20" />
           </div>
-          <ul
-            tabindex="0"
-            class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li>
               <RouterLink to="/" class="nav-item-mobile">
-                <Icon icon="lucide:home" width="18" height="18" />
+                <BaseIcon name="lucide:home" width="18" height="18" />
                 Home
               </RouterLink>
             </li>
             <li>
               <RouterLink to="/tasks" class="nav-item-mobile">
-                <Icon icon="lucide:check-square" width="18" height="18" />
+                <BaseIcon name="lucide:check-square" width="18" height="18" />
                 Tasks
               </RouterLink>
             </li>
             <li>
               <RouterLink to="/planner" class="nav-item-mobile">
-                <Icon icon="lucide:calendar" width="18" height="18" />
+                <BaseIcon name="lucide:calendar" width="18" height="18" />
                 Planner
               </RouterLink>
             </li>
             <li>
               <RouterLink to="/reflection" class="nav-item-mobile">
-                <Icon icon="lucide:bar-chart-3" width="18" height="18" />
+                <BaseIcon name="lucide:bar-chart-3" width="18" height="18" />
                 Reflection
               </RouterLink>
             </li>
             <li>
               <RouterLink to="/settings" class="nav-item-mobile">
-                <Icon icon="lucide:settings" width="18" height="18" />
+                <BaseIcon name="lucide:settings" width="18" height="18" />
                 Settings
               </RouterLink>
             </li>
@@ -108,7 +102,7 @@ const isHomePage = computed(() => route.path === '/')
             <component :is="Component" />
             <template #fallback>
               <div class="loading-state">
-                <Icon icon="lucide:loader-2" width="32" height="32" class="animate-spin" />
+                <BaseIcon name="lucide:loader-2" width="32" height="32" class="animate-spin" />
                 <span>Loading...</span>
               </div>
             </template>

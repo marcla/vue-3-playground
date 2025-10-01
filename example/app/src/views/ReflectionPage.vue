@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import { Icon } from '@iconify/vue'
+import BaseIcon from '@/components/BaseIcon.vue'
 
 import { useTimeEntryStore } from '../stores/timeEntryStore'
 import { useTaskStore } from '../stores/taskStore'
@@ -268,11 +268,7 @@ const formatDateRange = (startDate: string, endDate: string) => {
           <label class="label" for="week-select">
             <span class="label-text font-medium">Select Week:</span>
           </label>
-          <select
-            id="week-select"
-            v-model="selectedWeekId"
-            class="select select-bordered w-full max-w-md"
-          >
+          <select id="week-select" v-model="selectedWeekId" class="select select-bordered w-full max-w-md">
             <option v-for="week in weeks" :key="week.id" :value="week.id">
               {{ week.id }} - {{ formatDateRange(week.startDate, week.endDate) }}
               <span v-if="week.isCurrentWeek">(Current)</span>
@@ -296,7 +292,7 @@ const formatDateRange = (startDate: string, endDate: string) => {
           <div class="stats shadow">
             <div class="stat">
               <div class="stat-figure text-primary">
-                <Icon icon="lucide:target" width="32" height="32" />
+                <BaseIcon name="lucide:target" width="32" height="32" />
               </div>
               <div class="stat-title">Completion Rate</div>
               <div class="stat-value text-primary">{{ completionStats.completionRate }}%</div>
@@ -309,7 +305,7 @@ const formatDateRange = (startDate: string, endDate: string) => {
           <div class="stats shadow">
             <div class="stat">
               <div class="stat-figure text-secondary">
-                <Icon icon="lucide:clock" width="32" height="32" />
+                <BaseIcon name="lucide:clock" width="32" height="32" />
               </div>
               <div class="stat-title">Time Efficiency</div>
               <div class="stat-value text-secondary">{{ timeStats.efficiency }}%</div>
@@ -322,27 +318,18 @@ const formatDateRange = (startDate: string, endDate: string) => {
 
           <div class="stats shadow">
             <div class="stat">
-              <div
-                class="stat-figure"
-                :class="{
-                  'text-success': timeStats.variance >= 0,
-                  'text-error': timeStats.variance < 0,
-                }"
-              >
-                <Icon
-                  :icon="timeStats.variance >= 0 ? 'lucide:trending-up' : 'lucide:trending-down'"
-                  width="32"
-                  height="32"
-                />
+              <div class="stat-figure" :class="{
+                'text-success': timeStats.variance >= 0,
+                'text-error': timeStats.variance < 0,
+}">
+                <BaseIcon :name="timeStats.variance >= 0 ? 'lucide:trending-up' : 'lucide:trending-down'" width="32"
+                  height="32" />
               </div>
               <div class="stat-title">Time Variance</div>
-              <div
-                class="stat-value"
-                :class="{
-                  'text-success': timeStats.variance >= 0,
-                  'text-error': timeStats.variance < 0,
-                }"
-              >
+              <div class="stat-value" :class="{
+                'text-success': timeStats.variance >= 0,
+                'text-error': timeStats.variance < 0,
+              }">
                 {{ timeStats.variance >= 0 ? '+' : ''
                 }}{{ formatTime(Math.abs(timeStats.variance)) }}
               </div>
@@ -357,30 +344,18 @@ const formatDateRange = (startDate: string, endDate: string) => {
         <h2 class="text-2xl font-semibold text-primary mb-6">Daily Time Distribution</h2>
         <div class="card bg-base-100 shadow">
           <div class="card-body">
-            <div
-              v-if="dailyTimeDistribution.length === 0"
-              class="text-center py-8 text-base-content/60"
-            >
+            <div v-if="dailyTimeDistribution.length === 0" class="text-center py-8 text-base-content/60">
               No time tracking data available for this week.
             </div>
             <div v-else-if="maxDailyMinutes <= 1" class="text-center py-8 text-base-content/60">
               No time entries recorded for this week.
             </div>
             <div v-else class="flex justify-between items-end h-full gap-2">
-              <div
-                v-for="day in dailyTimeDistribution"
-                :key="day.date"
-                class="flex flex-col items-center flex-1"
-              >
-                <div
-                  class="w-8 bg-base-300 rounded-t flex-1 flex items-end overflow-hidden min-h-4"
-                >
-                  <div
-                    class="w-full bg-primary rounded-t transition-all duration-300"
-                    :style="{
-                      height: `${day.minutes > 0 ? Math.max(5, (day.minutes / maxDailyMinutes) * 100) : 0}px`,
-                    }"
-                  ></div>
+              <div v-for="day in dailyTimeDistribution" :key="day.date" class="flex flex-col items-center flex-1">
+                <div class="w-8 bg-base-300 rounded-t flex-1 flex items-end overflow-hidden min-h-4">
+                  <div class="w-full bg-primary rounded-t transition-all duration-300" :style="{
+                    height: `${day.minutes > 0 ? Math.max(5, (day.minutes / maxDailyMinutes) * 100) : 0}px`,
+                  }"></div>
                 </div>
 
                 <div class="text-xs font-medium text-primary mt-2">
@@ -403,15 +378,12 @@ const formatDateRange = (startDate: string, endDate: string) => {
               <div class="card-body">
                 <div class="flex justify-between items-center mb-4">
                   <h3 class="card-title text-lg capitalize">{{ area.area }}</h3>
-                  <div
-                    class="badge badge-lg font-semibold"
-                    :class="{
-                      'badge-success': area.completionRate >= 80,
-                      'badge-warning': area.completionRate >= 60 && area.completionRate < 80,
-                      'badge-info': area.completionRate >= 40 && area.completionRate < 60,
-                      'badge-error': area.completionRate < 40,
-                    }"
-                  >
+                  <div class="badge badge-lg font-semibold" :class="{
+                    'badge-success': area.completionRate >= 80,
+                    'badge-warning': area.completionRate >= 60 && area.completionRate < 80,
+                    'badge-info': area.completionRate >= 40 && area.completionRate < 60,
+                    'badge-error': area.completionRate < 40,
+                  }">
                     {{ area.completionRate }}%
                   </div>
                 </div>
@@ -434,46 +406,31 @@ const formatDateRange = (startDate: string, endDate: string) => {
         <div>
           <h2 class="text-2xl font-semibold text-primary mb-6">Task Status Distribution</h2>
           <div class="space-y-4">
-            <div
-              v-for="status in statusBreakdown"
-              :key="status.status"
-              class="card bg-base-100 shadow"
-            >
+            <div v-for="status in statusBreakdown" :key="status.status" class="card bg-base-100 shadow">
               <div class="card-body">
                 <div class="flex justify-between items-center mb-3">
                   <div class="flex items-center gap-2">
-                    <Icon
-                      :icon="
-                        status.status === 'completed'
-                          ? 'lucide:check'
-                          : status.status === 'in_progress'
-                            ? 'lucide:clock'
-                            : 'lucide:circle'
-                      "
-                      width="16"
-                      height="16"
-                      :class="{
+                    <BaseIcon :name="status.status === 'completed'
+                      ? 'lucide:check'
+                      : status.status === 'in_progress'
+                        ? 'lucide:clock'
+                        : 'lucide:circle'
+                      " width="16" height="16" :class="{
                         'text-success': status.status === 'completed',
                         'text-warning': status.status === 'in_progress',
                         'text-base-content/40': status.status === 'not_started',
-                      }"
-                    />
+                      }" />
                     <span class="font-medium capitalize">
                       {{ status.status.replace('_', ' ') }}
                     </span>
                   </div>
                   <span class="font-semibold">{{ status.percentage }}%</span>
                 </div>
-                <progress
-                  class="progress w-full"
-                  :class="{
-                    'progress-success': status.status === 'completed',
-                    'progress-warning': status.status === 'in_progress',
-                    'progress-info': status.status === 'not_started',
-                  }"
-                  :value="status.percentage"
-                  max="100"
-                ></progress>
+                <progress class="progress w-full" :class="{
+                  'progress-success': status.status === 'completed',
+                  'progress-warning': status.status === 'in_progress',
+                  'progress-info': status.status === 'not_started',
+                }" :value="status.percentage" max="100"></progress>
                 <div class="text-xs text-base-content/60 mt-1">{{ status.tasks }} tasks</div>
               </div>
             </div>
@@ -488,55 +445,40 @@ const formatDateRange = (startDate: string, endDate: string) => {
           <div class="card bg-base-100 shadow">
             <div class="card-body">
               <h3 class="card-title text-success gap-2 mb-4">
-                <Icon icon="lucide:check-circle" width="20" height="20" />
+                <BaseIcon name="lucide:check-circle" width="20" height="20" />
                 Completed ({{ completionStats.completed }})
               </h3>
               <div class="space-y-3">
-                <div
-                  v-for="task in weekTasks.filter((t: Task) => t.status === 'completed')"
-                  :key="task.id"
-                  class="p-3 bg-success/10 border border-success/20 rounded-lg"
-                >
+                <div v-for="task in weekTasks.filter((t: Task) => t.status === 'completed')" :key="task.id"
+                  class="p-3 bg-success/10 border border-success/20 rounded-lg">
                   <div class="font-medium text-base-content">{{ task.title }}</div>
                   <div class="text-sm text-base-content/60 mt-1">
                     {{ task.areas.join(', ') }} • {{ formatTime(task.actualMinutes) }}
                   </div>
                 </div>
-                <div
-                  v-if="completionStats.completed === 0"
-                  class="text-center text-base-content/50 py-4"
-                >
+                <div v-if="completionStats.completed === 0" class="text-center text-base-content/50 py-4">
                   No completed tasks this week
                 </div>
               </div>
             </div>
           </div>
 
-          <div
-            class="card bg-base-100 shadow"
-            v-if="completionStats.inProgress > 0 || completionStats.notStarted > 0"
-          >
+          <div class="card bg-base-100 shadow" v-if="completionStats.inProgress > 0 || completionStats.notStarted > 0">
             <div class="card-body">
               <h3 class="card-title text-warning gap-2 mb-4">
-                <Icon icon="lucide:circle-dashed" width="20" height="20" />
+                <BaseIcon name="lucide:circle-dashed" width="20" height="20" />
                 Incomplete ({{ completionStats.inProgress + completionStats.notStarted }})
               </h3>
               <div class="space-y-3">
-                <div
-                  v-for="task in weekTasks.filter((t: Task) => t.status !== 'completed')"
-                  :key="task.id"
-                  class="p-3 bg-warning/10 border border-warning/20 rounded-lg"
-                >
+                <div v-for="task in weekTasks.filter((t: Task) => t.status !== 'completed')" :key="task.id"
+                  class="p-3 bg-warning/10 border border-warning/20 rounded-lg">
                   <div class="font-medium text-base-content">{{ task.title }}</div>
                   <div class="text-sm text-base-content/60 mt-1">
                     {{ task.areas.join(', ') }} •
-                    <span
-                      class="badge badge-sm"
-                      :class="{
-                        'badge-warning': task.status === 'in_progress',
-                        'badge-ghost': task.status === 'not_started',
-                      }"
-                    >
+                    <span class="badge badge-sm" :class="{
+                      'badge-warning': task.status === 'in_progress',
+                      'badge-ghost': task.status === 'not_started',
+                    }">
                       {{ task.status.replace('_', ' ') }}
                     </span>
                   </div>
