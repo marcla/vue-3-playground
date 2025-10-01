@@ -1,0 +1,26 @@
+{
+  "name": "intermediate-vue",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "run-p dev:frontend dev:backend",
+    "dev:frontend": "cd app && npm run dev",
+    "dev:backend": "json-server backend/db.json --port 3000",
+    "build": "cd app && npm run build",
+    "preview": "cd app && npm run preview",
+    "backend": "cd app && npm run backend",
+    "test:unit": "cd app && npm run test:unit",
+    "test:e2e": "cd app && npm run test:e2e",
+    "build-only": "cd app && npm run build-only",
+    "type-check": "cd app && npm run type-check",
+    "lint": "cd app && npm run lint",
+    "format": "cd app && npm run format",
+    "install": "npm run install:app",
+    "install:app": "cd app && npm install"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.4",
+    "npm-run-all2": "^7.0.2"
+  }
+}

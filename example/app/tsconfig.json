@@ -1,0 +1,18 @@
+{
+  "files": [],
+  "include": ["./typed-router.d.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    }
+  ],
+  "compilerOptions": {
+    "moduleResolution": "Bundler"
+  }
+}

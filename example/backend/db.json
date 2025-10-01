@@ -1,0 +1,327 @@
+{
+  "weeks": [
+    {
+      "id": "2025-W20",
+      "startDate": "2025-05-12",
+      "endDate": "2025-05-18",
+      "totalPlannedMinutes": 2400,
+      "totalActualMinutes": 2580,
+      "isCurrentWeek": false,
+      "createdAt": "2025-05-12T08:00:00.000Z",
+      "updatedAt": "2025-05-18T20:30:00.000Z"
+    },
+    {
+      "id": "2025-W21",
+      "startDate": "2025-05-19",
+      "endDate": "2025-05-25",
+      "totalPlannedMinutes": 2700,
+      "totalActualMinutes": 1950,
+      "isCurrentWeek": true,
+      "createdAt": "2025-05-19T08:00:00.000Z",
+      "updatedAt": "2025-05-27T14:15:00.000Z"
+    },
+    {
+      "id": "2025-W22",
+      "startDate": "2025-05-26",
+      "endDate": "2025-06-01",
+      "totalPlannedMinutes": 2250,
+      "totalActualMinutes": 0,
+      "isCurrentWeek": false,
+      "createdAt": "2025-05-26T08:00:00.000Z",
+      "updatedAt": "2025-05-26T08:00:00.000Z"
+    },
+    {
+      "startDate": "2025-06-01",
+      "endDate": "2025-06-07",
+      "id": "2025-W23",
+      "isCurrentWeek": false,
+      "totalPlannedMinutes": 0,
+      "totalActualMinutes": 0,
+      "createdAt": "2025-06-05T08:00:57.229Z",
+      "updatedAt": "2025-06-05T08:00:57.229Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-1",
+      "weekId": "2025-W20",
+      "title": "Review Vue 3 Documentation",
+      "description": "Deep dive into Composition API and new features",
+      "areas": [
+        "learning",
+        "work"
+      ],
+      "estimatedMinutes": 240,
+      "actualMinutes": 275,
+      "status": "completed",
+      "createdAt": "2025-05-12T09:00:00.000Z",
+      "updatedAt": "2025-05-15T16:45:00.000Z"
+    },
+    {
+      "id": "task-2",
+      "weekId": "2025-W20",
+      "title": "Plan Weekend Hiking Trip",
+      "description": "Research trails, book accommodations, prepare gear list",
+      "areas": [
+        "personal",
+        "health"
+      ],
+      "estimatedMinutes": 120,
+      "actualMinutes": 185,
+      "status": "completed",
+      "createdAt": "2025-05-13T10:30:00.000Z",
+      "updatedAt": "2025-05-16T19:20:00.000Z"
+    },
+    {
+      "id": "task-3",
+      "weekId": "2025-W20",
+      "title": "Client Project: Dashboard Redesign",
+      "description": "Update user interface based on feedback from stakeholders",
+      "areas": [
+        "work",
+        "creative"
+      ],
+      "estimatedMinutes": 480,
+      "actualMinutes": 520,
+      "status": "completed",
+      "createdAt": "2025-05-12T08:15:00.000Z",
+      "updatedAt": "2025-05-17T17:30:00.000Z"
+    },
+    {
+      "id": "task-4",
+      "weekId": "2025-W20",
+      "title": "Coffee Chat with Sarah",
+      "description": "Catch up and discuss potential collaboration opportunities",
+      "areas": [
+        "social",
+        "work"
+      ],
+      "estimatedMinutes": 60,
+      "actualMinutes": 90,
+      "status": "completed",
+      "createdAt": "2025-05-14T11:00:00.000Z",
+      "updatedAt": "2025-05-16T15:30:00.000Z"
+    },
+    {
+      "id": "task-5",
+      "weekId": "2025-W20",
+      "title": "Weekly Meal Prep",
+      "description": "Plan and prepare healthy meals for the upcoming week",
+      "areas": [
+        "personal",
+        "health"
+      ],
+      "estimatedMinutes": 180,
+      "actualMinutes": 155,
+      "status": "completed",
+      "createdAt": "2025-05-12T12:00:00.000Z",
+      "updatedAt": "2025-05-18T14:45:00.000Z"
+    },
+    {
+      "id": "task-6",
+      "weekId": "2025-W21",
+      "title": "Prepare Workshop Materials",
+      "description": "Create slides, examples, and hands-on exercises for Vue workshop",
+      "areas": [
+        "work",
+        "learning"
+      ],
+      "estimatedMinutes": 360,
+      "actualMinutes": 280,
+      "status": "completed",
+      "createdAt": "2025-05-19T08:30:00.000Z",
+      "updatedAt": "2025-05-22T16:20:00.000Z"
+    },
+    {
+      "id": "task-7",
+      "weekId": "2025-W21",
+      "title": "Update Personal Portfolio",
+      "description": "Add recent projects and refresh design",
+      "areas": [
+        "personal",
+        "creative",
+        "work"
+      ],
+      "estimatedMinutes": 300,
+      "actualMinutes": 220,
+      "status": "in_progress",
+      "createdAt": "2025-05-20T10:00:00.000Z",
+      "updatedAt": "2025-05-25T15:30:00.000Z"
+    },
+    {
+      "id": "task-8",
+      "weekId": "2025-W21",
+      "title": "Team Retrospective Meeting",
+      "description": "Facilitate team discussion on last sprint and plan improvements",
+      "areas": [
+        "work",
+        "social"
+      ],
+      "estimatedMinutes": 90,
+      "actualMinutes": 95,
+      "status": "completed",
+      "createdAt": "2025-05-21T09:00:00.000Z",
+      "updatedAt": "2025-05-23T11:35:00.000Z"
+    },
+    {
+      "id": "task-9",
+      "weekId": "2025-W21",
+      "title": "Read 'Clean Code' Chapter 5",
+      "description": "Continue reading and take notes on formatting principles",
+      "areas": [
+        "learning"
+      ],
+      "estimatedMinutes": 120,
+      "actualMinutes": 0,
+      "status": "not_started",
+      "createdAt": "2025-05-22T13:00:00.000Z",
+      "updatedAt": "2025-05-22T13:00:00.000Z"
+    },
+    {
+      "id": "task-10",
+      "weekId": "2025-W21",
+      "title": "Gym Workout Sessions",
+      "description": "Three strength training sessions focusing on upper body",
+      "areas": [
+        "health",
+        "personal"
+      ],
+      "estimatedMinutes": 270,
+      "actualMinutes": 255,
+      "status": "completed",
+      "createdAt": "2025-05-19T07:00:00.000Z",
+      "updatedAt": "2025-05-25T19:45:00.000Z"
+    },
+    {
+      "id": "task-11",
+      "weekId": "2025-W22",
+      "title": "API Integration Testing",
+      "description": "Test new payment gateway integration across different scenarios",
+      "areas": [
+        "work"
+      ],
+      "estimatedMinutes": 240,
+      "actualMinutes": 0,
+      "status": "not_started",
+      "createdAt": "2025-05-26T08:30:00.000Z",
+      "updatedAt": "2025-05-26T08:30:00.000Z"
+    },
+    {
+      "id": "task-12",
+      "weekId": "2025-W22",
+      "title": "Family Dinner Planning",
+      "description": "Organize monthly family get-together, coordinate with everyone",
+      "areas": [
+        "social",
+        "personal"
+      ],
+      "estimatedMinutes": 90,
+      "actualMinutes": 0,
+      "status": "not_started",
+      "createdAt": "2025-05-26T11:00:00.000Z",
+      "updatedAt": "2025-05-26T11:00:00.000Z"
+    }
+  ],
+  "timeEntries": [
+    {
+      "id": "entry-1",
+      "taskId": "task-1",
+      "startTime": "2025-05-13T09:00:00.000Z",
+      "endTime": "2025-05-13T11:15:00.000Z",
+      "minutes": 135,
+      "isManual": false,
+      "notes": "Focused on reactivity system and composition patterns",
+      "createdAt": "2025-05-13T09:00:00.000Z"
+    },
+    {
+      "id": "entry-2",
+      "taskId": "task-1",
+      "startTime": "2025-05-15T14:00:00.000Z",
+      "endTime": "2025-05-15T16:20:00.000Z",
+      "minutes": 140,
+      "isManual": false,
+      "notes": "Completed reading on lifecycle hooks and provide/inject",
+      "createdAt": "2025-05-15T14:00:00.000Z"
+    },
+    {
+      "id": "entry-3",
+      "taskId": "task-3",
+      "startTime": "2025-05-14T09:00:00.000Z",
+      "endTime": "2025-05-14T13:00:00.000Z",
+      "minutes": 240,
+      "isManual": false,
+      "notes": "Initial wireframes and component breakdown",
+      "createdAt": "2025-05-14T09:00:00.000Z"
+    },
+    {
+      "id": "entry-4",
+      "taskId": "task-3",
+      "startTime": "2025-05-16T10:00:00.000Z",
+      "endTime": "2025-05-16T14:40:00.000Z",
+      "minutes": 280,
+      "isManual": false,
+      "notes": "Implementation and stakeholder review session",
+      "createdAt": "2025-05-16T10:00:00.000Z"
+    },
+    {
+      "id": "entry-5",
+      "taskId": "task-6",
+      "startTime": "2025-05-20T09:00:00.000Z",
+      "endTime": "2025-05-20T13:30:00.000Z",
+      "minutes": 270,
+      "isManual": false,
+      "notes": "Created slide deck and outlined hands-on exercises",
+      "createdAt": "2025-05-20T09:00:00.000Z"
+    },
+    {
+      "id": "entry-6",
+      "taskId": "task-7",
+      "startTime": "2025-05-21T15:00:00.000Z",
+      "endTime": "2025-05-21T18:40:00.000Z",
+      "minutes": 220,
+      "isManual": false,
+      "notes": "Updated project descriptions and added new case studies",
+      "createdAt": "2025-05-21T15:00:00.000Z"
+    },
+    {
+      "id": "entry-7",
+      "taskId": "task-10",
+      "startTime": "2025-05-20T07:00:00.000Z",
+      "endTime": "2025-05-20T08:30:00.000Z",
+      "minutes": 90,
+      "isManual": false,
+      "notes": "Chest and triceps workout",
+      "createdAt": "2025-05-20T07:00:00.000Z"
+    },
+    {
+      "id": "entry-8",
+      "taskId": "task-10",
+      "startTime": "2025-05-22T07:00:00.000Z",
+      "endTime": "2025-05-22T08:25:00.000Z",
+      "minutes": 85,
+      "isManual": false,
+      "notes": "Back and biceps session",
+      "createdAt": "2025-05-22T07:00:00.000Z"
+    },
+    {
+      "id": "entry-9",
+      "taskId": "task-10",
+      "startTime": "2025-05-24T07:15:00.000Z",
+      "endTime": "2025-05-24T08:35:00.000Z",
+      "minutes": 80,
+      "isManual": false,
+      "notes": "Shoulders and core workout",
+      "createdAt": "2025-05-24T07:15:00.000Z"
+    },
+    {
+      "id": "entry-10",
+      "taskId": "task-2",
+      "startTime": "2025-05-14T19:00:00.000Z",
+      "endTime": "2025-05-14T22:05:00.000Z",
+      "minutes": 185,
+      "isManual": true,
+      "notes": "Research took longer than expected due to booking complications",
+      "createdAt": "2025-05-14T22:05:00.000Z"
+    }
+  ]
+}
