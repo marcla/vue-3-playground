@@ -7,6 +7,7 @@ import BaseModal from './BaseModal.vue'
 
 import type { Task, TaskStatus, TaskArea, Week } from '../types'
 import { onMounted } from 'vue'
+import BaseInputText from './BaseInputText.vue'
 
 interface TaskFormData {
   title: string
@@ -252,13 +253,15 @@ onMounted(async () => {
     <!-- Form -->
     <form @submit.prevent="saveTask" class="space-y-6">
       <!-- Title -->
-      <div class="form-control">
+      <!-- <div class="form-control">
         <label class="label" for="task-title">
           <span class="label-text font-medium">Task Title *</span>
         </label>
         <input id="task-title" v-model="taskForm.title" class="input input-bordered w-full" type="text"
           placeholder="Enter task title..." :disabled="isLoading" required />
-      </div>
+      </div> -->
+      <BaseInputText id="task-title" label="Task Title *" v-model="taskForm.title" class="w-full"
+        placeholder="Enter task title..." :disabled="isLoading" required />
 
       <!-- Description -->
       <div class="form-control">
@@ -291,9 +294,9 @@ onMounted(async () => {
         </label>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
           <button v-for="area in availableAreas" :key="area" type="button" @click="toggleArea(area)" :class="[
-              'btn btn-sm',
-              taskForm.areas.includes(area) ? 'btn-primary' : 'btn-outline btn-primary',
-            ]" :disabled="isLoading">
+            'btn btn-sm',
+            taskForm.areas.includes(area) ? 'btn-primary' : 'btn-outline btn-primary',
+          ]" :disabled="isLoading">
             {{ area }}
           </button>
         </div>
@@ -333,13 +336,13 @@ onMounted(async () => {
         <BaseIcon v-if="isLoading" name="lucide:loader-2" width="16" height="16" class="animate-spin" />
         <BaseIcon v-else :name="isEditMode ? 'lucide:save' : 'lucide:plus'" width="16" height="16" />
         {{
-        isLoading
-        ? isEditMode
-        ? 'Updating...'
-        : 'Creating...'
-        : isEditMode
-        ? 'Update Task'
-        : 'Create Task'
+          isLoading
+            ? isEditMode
+              ? 'Updating...'
+              : 'Creating...'
+            : isEditMode
+              ? 'Update Task'
+              : 'Create Task'
         }}
       </button>
     </template>
