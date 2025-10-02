@@ -6,58 +6,60 @@ import TaskFormModal from '@/components/TaskFormModal.vue'
 import TimeEntryFormModal from '@/components/TimeEntryFormModal.vue'
 
 import { formatTaskStatusLabel, filterTasks } from '@/composable/useTask'
+import { useWeekStore } from '@/composable/useWeek'
 import { formatTime } from '@/utils/datetime'
 
 import { useTaskStore } from '@/stores/taskStore'
 import { useTimeEntryStore } from '@/stores/timeEntryStore'
 
-import type { Task, TaskStatus, TaskArea, TimeEntry, Week } from '@/types'
+import type { Task, TaskStatus, TaskArea, TimeEntry } from '@/types'
 import type { RouterLink } from 'vue-router'
 
 // API base URL
-const API_BASE_URL = 'http://localhost:3000'
+// const API_BASE_URL = 'http://localhost:3000'
 
 // Use the centralized stores
 const taskStore = useTaskStore()
 const timeEntryStore = useTimeEntryStore()
+const weekStore = useWeekStore()
 
 // Week state
-const weeks = ref<Week[]>([])
-const weekIsLoading = ref(false)
-const weekError = ref<string | null>(null)
+// const weeks = ref<Week[]>([])
+// const weekIsLoading = ref(false)
+// const weekError = ref<string | null>(null)
 
 // Week getters
-const currentWeek = computed(() => {
-  return weeks.value.find((week) => week.isCurrentWeek) || null
-})
+// const currentWeek = computed(() => {
+//   return weeks.value.find((week) => week.isCurrentWeek) || null
+// })
 
 // Week actions
-const fetchWeeks = async () => {
-  weekIsLoading.value = true
-  weekError.value = null
+// const fetchWeeks = async () => {
+//   weekIsLoading.value = true
+//   weekError.value = null
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/weeks`)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
+//   try {
+//     const response = await fetch(`${API_BASE_URL}/weeks`)
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`)
+//     }
 
-    const fetchedWeeks: Week[] = await response.json()
-    weeks.value = fetchedWeeks
+//     const fetchedWeeks: Week[] = await response.json()
+//     weeks.value = fetchedWeeks
 
-    return fetchedWeeks
-  } catch (err) {
-    weekError.value = err instanceof Error ? err.message : 'Failed to fetch weeks'
-    console.error('Error fetching weeks:', err)
-    throw err
-  } finally {
-    weekIsLoading.value = false
-  }
-}
+//     return fetchedWeeks
+//   } catch (err) {
+//     weekError.value = err instanceof Error ? err.message : 'Failed to fetch weeks'
+//     console.error('Error fetching weeks:', err)
+//     throw err
+//   } finally {
+//     weekIsLoading.value = false
+//   }
+// }
 
-const getWeekById = (weekId: string) => {
-  return weeks.value.find((week) => week.id === weekId) || null
-}
+// const getWeekById = (weekId: string) => {
+//   return weeks.value.find((week) => week.id === weekId) || null
+// }
 
 // Filter method (using taskStore)
 // const filterTasks = (filters: {
@@ -172,7 +174,7 @@ const selectedTaskId = ref<string>('')
 
 // Initialize data on component mount
 onMounted(async () => {
-  await Promise.all([taskStore.fetchTasks(), fetchWeeks(), timeEntryStore.fetchTimeEntries()])
+  await Promise.all([taskStore.fetchTasks(), weekStore.fetchWeeks(), timeEntryStore.fetchTimeEntries()])
 })
 
 // Filter and sort options
