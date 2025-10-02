@@ -28,6 +28,12 @@ const isHomePage = computed(() => route.path === '/')
             </RouterLink>
           </li>
           <li>
+            <RouterLink to="/sandbox" class="nav-item">
+              <BaseIcon name="lucide:info" width="18" height="18" />
+              Sandbox
+            </RouterLink>
+          </li>
+          <li>
             <RouterLink to="/tasks" class="nav-item">
               <BaseIcon name="lucide:check-square" width="18" height="18" />
               Tasks
