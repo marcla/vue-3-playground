@@ -6,6 +6,7 @@ import TaskFormModal from '@/components/TaskFormModal.vue'
 import TimeEntryFormModal from '@/components/TimeEntryFormModal.vue'
 
 import { formatTaskStatusLabel, filterTasks } from '@/composable/useTask'
+import { formatTime } from '@/utils/datetime'
 
 import { useTaskStore } from '@/stores/taskStore'
 import { useTimeEntryStore } from '@/stores/timeEntryStore'
@@ -86,15 +87,15 @@ const getStatusBadge = (status: string) => {
 //   return status.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase())
 // }
 
-const formatTime = (minutes: number) => {
-  if (minutes === 0) return '0 min'
-  const hours = Math.floor(minutes / 60)
-  const mins = minutes % 60
+// const formatTime = (minutes: number) => {
+//   if (minutes === 0) return '0 min'
+//   const hours = Math.floor(minutes / 60)
+//   const mins = minutes % 60
 
-  if (hours === 0) return `${mins} min`
-  if (mins === 0) return `${hours}h`
-  return `${hours}h ${mins}min`
-}
+//   if (hours === 0) return `${mins} min`
+//   if (mins === 0) return `${hours}h`
+//   return `${hours}h ${mins}min`
+// }
 
 const formatDateTimeShort = (dateTimeString: string) => {
   return new Date(dateTimeString).toLocaleDateString()
