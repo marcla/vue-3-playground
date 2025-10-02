@@ -5,6 +5,8 @@ import DeleteConfirmModal from '@/components/DeleteConfirmModal.vue'
 import TaskFormModal from '@/components/TaskFormModal.vue'
 import TimeEntryFormModal from '@/components/TimeEntryFormModal.vue'
 
+import { formatTaskStatusLabel, filterTasks } from '@/composable/useTask'
+
 import { useTaskStore } from '@/stores/taskStore'
 import { useTimeEntryStore } from '@/stores/timeEntryStore'
 
@@ -57,14 +59,14 @@ const getWeekById = (weekId: string) => {
 }
 
 // Filter method (using taskStore)
-const filterTasks = (filters: {
-  weekId?: string
-  status?: TaskStatus | 'all'
-  area?: TaskArea | 'all'
-  searchTerm?: string
-}) => {
-  return taskStore.filterTasks(filters)
-}
+// const filterTasks = (filters: {
+//   weekId?: string
+//   status?: TaskStatus | 'all'
+//   area?: TaskArea | 'all'
+//   searchTerm?: string
+// }) => {
+//   return taskStore.filterTasks(filters)
+// }
 
 // Task functions
 const getStatusBadge = (status: string) => {
@@ -80,9 +82,9 @@ const getStatusBadge = (status: string) => {
   }
 }
 
-const formatStatus = (status: string) => {
-  return status.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase())
-}
+// const formatStatus = (status: string) => {
+//   return status.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+// }
 
 const formatTime = (minutes: number) => {
   if (minutes === 0) return '0 min'
@@ -183,7 +185,7 @@ const expandedTimeEntries = ref<Set<string>>(new Set())
 
 // Filter tasks using inline method
 const filteredTasks = computed(() => {
-  return filterTasks({
+  return filterTasks(taskStore.tasks, {
     weekId: selectedWeek.value === 'all' ? undefined : selectedWeek.value,
     status: selectedStatus.value as TaskStatus | 'all',
     area: selectedArea.value as TaskArea | 'all',
@@ -362,7 +364,7 @@ const toggleTimeEntries = (taskId: string) => {
               {{ task.title }}
             </RouterLink>
             <div :class="['badge', getStatusBadge(task.status)]">
-              {{ formatStatus(task.status) }}
+              {{ formatTaskStatusLabel(task.status) }}
             </div>
           </div>
 
@@ -408,7 +410,7 @@ const toggleTimeEntries = (taskId: string) => {
                         ">
                         {{ getTaskTotalTimeFromEntries(task.id) > task.actualMinutes ? '+' : ''
                         }}{{
-  formatTime(getTaskTotalTimeFromEntries(task.id) - task.actualMinutes)
+                          formatTime(getTaskTotalTimeFromEntries(task.id) - task.actualMinutes)
                         }}
                         vs actual
                       </span>
