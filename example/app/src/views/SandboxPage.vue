@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 
 import BaseInputText from '@/components/BaseInputText.vue';
+import SlotDemo from '@/components/SlotDemo.vue';
 
 const fullname = ref('');
 const isLoading = ref(false);
@@ -11,6 +12,23 @@ const isLoading = ref(false);
 <template>
   <div class="container mx-auto p-8">
     <h1>Sandbox</h1>
+
+    <SlotDemo>
+      <template v-slot:header>
+        <h1>Titolo personalizzato</h1>
+      </template>
+
+      <template v-slot:default="{ count }">
+        Contenuto personalizzato <b>{{ count }}</b>
+      </template>
+
+      <template v-slot:footer>
+        <BaseInputText class="w-full" label="Nome completo" v-model="fullname" placeholder="Enter task title..."
+          :disabled="isLoading" required />
+      </template>
+    </SlotDemo>
+
+    <hr style="margin: 20px 0;">
 
     <details open="true">
       <summary>Nome completo</summary>
