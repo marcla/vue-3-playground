@@ -1,29 +1,19 @@
 import type { Week } from '@/types'
+import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { useFetch } from './useFetch'
+import { useFetch } from '../composable/useFetch'
 
-// API base URL for week operations
-// const API_BASE_URL = 'http://localhost:3000'
+export const useWeekStore = defineStore('weekStore', () => {
+  const weeks = ref<Week[]>([])
+  const weekIsLoading = ref(false)
+  const weekError = ref<string | null>(null)
 
-// Singleton - Shared state
-export const weeks = ref<Week[]>([])
-const weekIsLoading = ref(false)
-const weekError = ref<string | null>(null)
-
-// Factory
-export function useWeekStore() {
   const fetchWeeks = async () => {
     weekIsLoading.value = true
     weekError.value = null
 
     try {
-      // const response = await fetch(`${API_BASE_URL}/weeks`)
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`)
-      // }
       const response = await useFetch<Week[]>('weeks')
-
-      // const fetchedWeeks: Week[] = await response.json()
       weeks.value = response
 
       return response
@@ -52,10 +42,11 @@ export function useWeekStore() {
     currentWeek,
     getWeekById,
     // State
+    weeks,
     weekError,
     weekIsLoading,
   }
-}
+})
 
 // Factory - Generate unique state
 export function generateWeeks() {

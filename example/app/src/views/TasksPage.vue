@@ -6,9 +6,9 @@ import TaskFormModal from '@/components/TaskFormModal.vue'
 import TimeEntryFormModal from '@/components/TimeEntryFormModal.vue'
 
 import { formatTaskStatusLabel, filterTasks } from '@/composable/useTask'
-import { useWeekStore } from '@/composable/useWeek'
 import { formatTime } from '@/utils/datetime'
 
+import { useWeekStore } from '@/stores/weekStore'
 import { useTaskStore } from '@/stores/taskStore'
 import { useTimeEntryStore } from '@/stores/timeEntryStore'
 
@@ -324,7 +324,7 @@ const toggleTimeEntries = (taskId: string) => {
         </label>
         <select v-model="selectedWeek" class="select select-bordered">
           <option value="all">All Weeks</option>
-          <option v-for="week in weeks" :key="week.id" :value="week.id">
+          <option v-for="week in weekStore.weeks" :key="week.id" :value="week.id">
             {{ week.id }} ({{ new Date(week.startDate).toLocaleDateString() }})
           </option>
         </select>
@@ -413,7 +413,7 @@ const toggleTimeEntries = (taskId: string) => {
                         ">
                         {{ getTaskTotalTimeFromEntries(task.id) > task.actualMinutes ? '+' : ''
                         }}{{
-                          formatTime(getTaskTotalTimeFromEntries(task.id) - task.actualMinutes)
+  formatTime(getTaskTotalTimeFromEntries(task.id) - task.actualMinutes)
                         }}
                         vs actual
                       </span>
