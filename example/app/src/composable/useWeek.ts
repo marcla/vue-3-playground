@@ -1,8 +1,9 @@
 import type { Week } from '@/types'
 import { computed, ref } from 'vue'
+import { useFetch } from './useFetch'
 
 // API base URL for week operations
-const API_BASE_URL = 'http://localhost:3000'
+// const API_BASE_URL = 'http://localhost:3000'
 
 // Singleton - Shared state
 export const weeks = ref<Week[]>([])
@@ -16,15 +17,16 @@ export function useWeekStore() {
     weekError.value = null
 
     try {
-      const response = await fetch(`${API_BASE_URL}/weeks`)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      // const response = await fetch(`${API_BASE_URL}/weeks`)
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! status: ${response.status}`)
+      // }
+      const response = await useFetch<Week[]>('weeks')
 
-      const fetchedWeeks: Week[] = await response.json()
-      weeks.value = fetchedWeeks
+      // const fetchedWeeks: Week[] = await response.json()
+      weeks.value = response
 
-      return fetchedWeeks
+      return response
     } catch (err) {
       weekError.value = err instanceof Error ? err.message : 'Failed to fetch weeks'
       console.error('Error fetching weeks:', err)
