@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import BaseIcon from '@/components/BaseIcon.vue'
+import { useHotThemeKeys } from './composable/useHotkeys'
 
 import { computed } from 'vue'
 
 const route = useRoute()
+useHotThemeKeys();
 
 const isHomePage = computed(() => route.path === '/')
 </script>
